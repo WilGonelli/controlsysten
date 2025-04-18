@@ -1,0 +1,61 @@
+[
+  {
+  "id": 1,
+  "name": "John Doe",
+  "divida": 1000.00,
+  "lastTansition":2,
+  "transactions":[{
+    "id":1,
+    "value": 100.00,
+    "type":"spent"
+  }
+  ,{
+    "id":2,
+    "value": 200.00,
+    "type":"spent"
+  },{
+    "id":3,
+    "value": 50.00,
+    "type":"paid"
+  }]
+},
+{
+  "id": 2,
+  "name": "Jane Smith",
+  "divida": 500.00,
+  "lastTansition":1,
+  "transactions":[{
+    "id":1,
+    "value": 50.00,
+    "type":"spent"
+  }
+  ,{
+    "id":2,
+    "value": 100.00,
+    "type":"spent"
+  },{
+    "id":3,
+    "value": 25.00,
+    "type":"paid"
+  }]
+},{
+  "id": 3,
+  "name": "Alice Johnson",
+  "divida": 2000.00,
+  "lastTansition":3,
+  "transactions":[{
+    "id":1,
+    "value": 200.00,
+    "type":"spent"
+  }
+  ,{
+    "id":2,
+    "value": 300.00,
+    "type":"spent"
+  },{
+    "id":3,
+    "value": 100.00,
+    "type":"paid"
+  }]
+}
+]
