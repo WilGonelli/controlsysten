@@ -8,9 +8,8 @@ export const styles = StyleSheet.create({
   },
   StdContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 24,
     zIndex: 2,
   },
   image: {
