@@ -1,11 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 import { styles } from "./style";
+import clientsList from "../../mocks/clientsMocked.json";
+import { StdBackground } from "../../components/Background/StdBackground";
 
 export default function Home() {
   return (
-    <View style={styles.container}>
+    <StdBackground>
       <Text style={styles.text}>Welcome to the Home Page!</Text>
-    </View>
+    </StdBackground>
   );
 }
