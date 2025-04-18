@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import RootHome from "./Home/RootHome";
+import RootClients from "./Home/RootClients";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { StdColor } from "../components/style/StdStyle";
 
@@ -26,7 +26,7 @@ export default function TabsRoot() {
             ),
           }}
           name="Clientes"
-          component={RootHome}
+          component={RootClients}
         />
         <Tab.Screen
           options={{
@@ -35,7 +35,7 @@ export default function TabsRoot() {
             ),
           }}
           name="Produtos"
-          component={RootHome}
+          component={RootClients}
         />
         <Tab.Screen
           options={{
@@ -49,7 +49,7 @@ export default function TabsRoot() {
             ),
           }}
           name="Maquinas"
-          component={RootHome}
+          component={RootClients}
         />
         <Tab.Screen
           options={{
@@ -63,7 +63,7 @@ export default function TabsRoot() {
             ),
           }}
           name="Caxeta"
-          component={RootHome}
+          component={RootClients}
         />
       </Tab.Navigator>
     </NavigationContainer>

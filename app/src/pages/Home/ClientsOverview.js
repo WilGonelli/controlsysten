@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { styles } from "./style";
 import { StdBackground } from "../../components/Background/StdBackground";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { ClientService } from "../../services/ClientService";
+import { useNavigation } from "@react-navigation/native";
 
 const ClientItem = ({ item }) => {
   return (
@@ -19,7 +20,7 @@ const ClientItem = ({ item }) => {
   );
 };
 
-export default function Home() {
+export default function ClientsOverview() {
   const [clients, setClients] = React.useState([]);
 
   React.useEffect(() => {
@@ -27,15 +28,22 @@ export default function Home() {
     setClients(clients);
   }, []);
 
+  const navigation = useNavigation();
+
   return (
     <StdBackground>
       <View style={styles.containerClients}>
         <Text style={styles.titleScreen}>Clientes</Text>
-        <FontAwesome5
-          name="user-plus"
-          size={24}
+        <TouchableOpacity
           style={styles.iconPlusClient}
-        />
+          onPress={() => navigation.replace("AddClient")}
+        >
+          <FontAwesome5
+            name="user-plus"
+            size={24}
+            style={styles.iconPlusClient}
+          />
+        </TouchableOpacity>
       </View>
       {clients.length > 0 && (
         <View style={styles.containerDescriptions}>
