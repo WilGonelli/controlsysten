@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { StdColor } from "../style/StdStyle";
 
 export const styles = StyleSheet.create({
   StdBackground: {
     flex: 1,
-    backgroundColor: "#0B192C",
+    backgroundColor: StdColor.backgroundDefault,
   },
   StdContainer: {
     flex: 1,

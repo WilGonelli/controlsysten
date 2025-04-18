@@ -3,12 +3,22 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import RootHome from "./Home/RootHome";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import { StdColor } from "../components/style/StdStyle";
 
-export default function App() {
+export default function TabsRoot() {
   const Tab = createBottomTabNavigator();
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarActiveTintColor: StdColor.primaryColor[100],
+          tabBarInactiveTintColor: StdColor.secndaryColor[100],
+          tabBarStyle: {
+            backgroundColor: StdColor.black[80],
+          },
+        }}
+      >
         <Tab.Screen
           options={{
             tabBarIcon: ({ color }) => (
