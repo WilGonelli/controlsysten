@@ -1,26 +1,38 @@
 import React from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { styles } from "./style";
 import { StdBackground } from "../../components/Background/StdBackground";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { ClientService } from "../../services/ClientService";
+import { useNavigation } from "@react-navigation/native";
 
-const ClientItem = ({ item }) => {
+const ClientItem = ({ item, navigation }) => {
   return (
-    <View style={styles.clientItem}>
+    <TouchableOpacity
+      style={styles.clientItem}
+      onPress={() => navigation.replace("UpdateClient", { client: item })}
+    >
       <Text style={styles.clientInfo}>{item.name}</Text>
       <View style={styles.clientContainerDebt}>
         <Text style={styles.clientInfo}>R$ </Text>
-        <Text style={styles.clientInfo}>
-          {parseFloat(item.divida).toFixed(2).replace(".", ",")}
-        </Text>
+        {parseFloat(item.divida) < 0 ? (
+          <Text style={styles.clientInfoNegative}>
+            {parseFloat(item.divida).toFixed(2).replace(".", ",")}
+          </Text>
+        ) : (
+          <Text style={styles.clientInfoPositive}>
+            {parseFloat(item.divida).toFixed(2).replace(".", ",")}
+          </Text>
+        )}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
-export default function Home() {
+export default function ClientsOverview() {
   const [clients, setClients] = React.useState([]);
+
+  const navigation = useNavigation();
 
   React.useEffect(() => {
     const clients = ClientService.getAllClients();
@@ -31,11 +43,16 @@ export default function Home() {
     <StdBackground>
       <View style={styles.containerClients}>
         <Text style={styles.titleScreen}>Clientes</Text>
-        <FontAwesome5
-          name="user-plus"
-          size={24}
+        <TouchableOpacity
           style={styles.iconPlusClient}
-        />
+          onPress={() => navigation.replace("AddClient")}
+        >
+          <FontAwesome5
+            name="user-plus"
+            size={24}
+            style={styles.iconPlusClient}
+          />
+        </TouchableOpacity>
       </View>
       {clients.length > 0 && (
         <View style={styles.containerDescriptions}>
@@ -45,7 +62,9 @@ export default function Home() {
       )}
       <FlatList
         data={clients}
-        renderItem={({ item }) => <ClientItem item={item} />}
+        renderItem={({ item }) => (
+          <ClientItem item={item} navigation={navigation} />
+        )}
         keyExtractor={(item) => item.id}
       />
     </StdBackground>
