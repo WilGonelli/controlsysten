@@ -6,29 +6,38 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { ClientService } from "../../services/ClientService";
 import { useNavigation } from "@react-navigation/native";
 
-const ClientItem = ({ item }) => {
+const ClientItem = ({ item, navigation }) => {
   return (
-    <View style={styles.clientItem}>
+    <TouchableOpacity
+      style={styles.clientItem}
+      onPress={() => navigation.replace("UpdateClient", { client: item })}
+    >
       <Text style={styles.clientInfo}>{item.name}</Text>
       <View style={styles.clientContainerDebt}>
         <Text style={styles.clientInfo}>R$ </Text>
-        <Text style={styles.clientInfo}>
-          {parseFloat(item.divida).toFixed(2).replace(".", ",")}
-        </Text>
+        {parseFloat(item.divida) < 0 ? (
+          <Text style={styles.clientInfoNegative}>
+            {parseFloat(item.divida).toFixed(2).replace(".", ",")}
+          </Text>
+        ) : (
+          <Text style={styles.clientInfoPositive}>
+            {parseFloat(item.divida).toFixed(2).replace(".", ",")}
+          </Text>
+        )}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 export default function ClientsOverview() {
   const [clients, setClients] = React.useState([]);
 
+  const navigation = useNavigation();
+
   React.useEffect(() => {
     const clients = ClientService.getAllClients();
     setClients(clients);
   }, []);
-
-  const navigation = useNavigation();
 
   return (
     <StdBackground>
@@ -53,7 +62,9 @@ export default function ClientsOverview() {
       )}
       <FlatList
         data={clients}
-        renderItem={({ item }) => <ClientItem item={item} />}
+        renderItem={({ item }) => (
+          <ClientItem item={item} navigation={navigation} />
+        )}
         keyExtractor={(item) => item.id}
       />
     </StdBackground>

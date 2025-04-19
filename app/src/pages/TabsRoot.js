@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import RootClients from "./Home/RootClients";
+import RootClients from "./Clients/RootClients";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { StdColor } from "../components/style/StdStyle";
 
