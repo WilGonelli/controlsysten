@@ -17,6 +17,9 @@ class Client {
 export const ClientService = {
   getAllClients: async () => {
     const clientList = await loadClients();
+    const sortedClients = clientList.sort(
+      (a, b) => b.lastTansition - a.lastTansition
+    );
     return clientList;
   },
 
