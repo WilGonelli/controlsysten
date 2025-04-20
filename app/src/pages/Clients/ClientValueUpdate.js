@@ -99,16 +99,30 @@ export default function ClientValueUpdate({ route }) {
       </TouchableOpacity>
       <View style={styles.transitionsHistoryClient}>
         {client.transactions.length > 1 && (
-          <View style={styles.containerFlatListClients}>
-            <Text style={styles.labelHistoryTransitions}>
-              Lista de movimentações
-            </Text>
-            <FlatList
-              data={client.transactions}
-              renderItem={({ item }) => <TransitionsItens item={item} />}
-              keyExtractor={(item) => item.id}
-            />
-          </View>
+          <>
+            <View style={styles.containerFlatListClients}>
+              <Text style={styles.labelHistoryTransitions}>
+                Lista de movimentações
+              </Text>
+              <FlatList
+                data={client.transactions}
+                renderItem={({ item }) => <TransitionsItens item={item} />}
+                keyExtractor={(item) => item.id}
+              />
+            </View>
+            <View style={styles.TotalTransitions}>
+              <Text style={styles.labelTotalTransitions}>Saldo: R$ </Text>
+              {client.debt < 0 ? (
+                <Text style={styles.labelTotalTransitionsNegative}>
+                  {parseFloat(client.debt).toFixed(2).replace(".", ",")}
+                </Text>
+              ) : (
+                <Text style={styles.labelTotalTransitionsPositive}>
+                  {parseFloat(client.debt).toFixed(2).replace(".", ",")}
+                </Text>
+              )}
+            </View>
+          </>
         )}
       </View>
     </StdBackground>

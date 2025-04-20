@@ -15,13 +15,13 @@ const ClientItem = ({ item, navigation }) => {
       <Text style={styles.clientInfo}>{item.name}</Text>
       <View style={styles.clientContainerDebt}>
         <Text style={styles.clientInfo}>R$ </Text>
-        {parseFloat(item.divida) < 0 ? (
+        {parseFloat(item.debt) < 0 ? (
           <Text style={styles.clientInfoNegative}>
-            {parseFloat(item.divida).toFixed(2).replace(".", ",")}
+            {parseFloat(item.debt).toFixed(2).replace(".", ",")}
           </Text>
         ) : (
           <Text style={styles.clientInfoPositive}>
-            {parseFloat(item.divida).toFixed(2).replace(".", ",")}
+            {parseFloat(item.debt).toFixed(2).replace(".", ",")}
           </Text>
         )}
       </View>
@@ -35,8 +35,11 @@ export default function ClientsOverview() {
   const navigation = useNavigation();
 
   React.useEffect(() => {
-    const clients = ClientService.getAllClients();
-    setClients(clients);
+    async function fetchData() {
+      const data = await ClientService.getAllClients();
+      setClients(data);
+    }
+    fetchData();
   }, []);
 
   return (
@@ -67,6 +70,9 @@ export default function ClientsOverview() {
         )}
         keyExtractor={(item) => item.id}
       />
+      <TouchableOpacity onPress={() => ClientService.removedb()}>
+        <Text>apagar</Text>
+      </TouchableOpacity>
     </StdBackground>
   );
 }

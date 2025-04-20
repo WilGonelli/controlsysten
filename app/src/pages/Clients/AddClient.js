@@ -21,7 +21,7 @@ export default function AddClient() {
 
   return (
     <StdBackground>
-      <Text style={styles.titleScreen}>adicinar Cliente</Text>
+      <Text style={styles.titleScreen}>adicionar Cliente</Text>
       <Text style={styles.descriptionsText}>Nome:</Text>
       <TextInput
         autoFocus={true}

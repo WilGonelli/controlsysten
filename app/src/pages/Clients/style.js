@@ -180,4 +180,22 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     color: "#006400",
   },
+  TotalTransitions: {
+    paddingHorizontal: 24,
+    borderTopWidth: 2,
+    alignItems: "flex-end",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  labelTotalTransitions: {
+    fontSize: 24,
+  },
+  labelTotalTransitionsNegative: {
+    fontSize: 24,
+    color: "#8B0000",
+  },
+  labelTotalTransitionsPositive: {
+    fontSize: 24,
+    color: "#006400",
+  },
 });
