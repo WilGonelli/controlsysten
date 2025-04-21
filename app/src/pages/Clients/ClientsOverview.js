@@ -1,10 +1,13 @@
 import React from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { styles } from "./style";
+import { StdColor } from "../../components/style/StdStyle";
+
 import { StdBackground } from "../../components/Background/StdBackground";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { ClientService } from "../../services/ClientService";
 import { useNavigation } from "@react-navigation/native";
+import { commonStyles } from "../../components/style/commonStyle";
 
 const ClientItem = ({ item, navigation }) => {
   return (
@@ -12,15 +15,21 @@ const ClientItem = ({ item, navigation }) => {
       style={styles.clientItem}
       onPress={() => navigation.replace("UpdateClient", { client: item })}
     >
-      <Text style={styles.clientInfo}>{item.name}</Text>
+      <Text style={[commonStyles.commonBtnText, { color: StdColor.black[80] }]}>
+        {item.name}
+      </Text>
       <View style={styles.clientContainerDebt}>
-        <Text style={styles.clientInfo}>R$ </Text>
+        <Text
+          style={[commonStyles.commonBtnText, { color: StdColor.black[80] }]}
+        >
+          R${" "}
+        </Text>
         {parseFloat(item.debt) < 0 ? (
-          <Text style={styles.clientInfoNegative}>
+          <Text style={[commonStyles.commonBtnText, { color: "#8B0000" }]}>
             {parseFloat(item.debt).toFixed(2).replace(".", ",")}
           </Text>
         ) : (
-          <Text style={styles.clientInfoPositive}>
+          <Text style={[commonStyles.commonBtnText, { color: "#006400" }]}>
             {parseFloat(item.debt).toFixed(2).replace(".", ",")}
           </Text>
         )}
@@ -44,23 +53,21 @@ export default function ClientsOverview() {
 
   return (
     <StdBackground>
-      <View style={styles.containerClients}>
-        <Text style={styles.titleScreen}>Clientes</Text>
-        <TouchableOpacity
+      <Text style={commonStyles.commomTextTitle}>Clientes</Text>
+      <TouchableOpacity
+        style={styles.iconPlusClient}
+        onPress={() => navigation.replace("AddClient")}
+      >
+        <FontAwesome5
+          name="user-plus"
+          size={24}
           style={styles.iconPlusClient}
-          onPress={() => navigation.replace("AddClient")}
-        >
-          <FontAwesome5
-            name="user-plus"
-            size={24}
-            style={styles.iconPlusClient}
-          />
-        </TouchableOpacity>
-      </View>
+        />
+      </TouchableOpacity>
       {clients.length > 0 && (
-        <View style={styles.containerDescriptions}>
-          <Text style={styles.descriptionsText}>Nome:</Text>
-          <Text style={styles.descriptionsText}>Divida:</Text>
+        <View style={commonStyles.commonContainerLabel}>
+          <Text style={commonStyles.commonDescriptionsText}>Nome:</Text>
+          <Text style={commonStyles.commonDescriptionsText}>Divida:</Text>
         </View>
       )}
       <FlatList

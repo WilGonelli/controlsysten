@@ -4,10 +4,11 @@ import { styles } from "./style";
 import { StdBackground } from "../../components/Background/StdBackground";
 import { useNavigation } from "@react-navigation/native";
 import products from "../../mocks/productsMocked.json";
+import { commonStyles } from "../../components/style/commonStyle";
 
 const ProductRender = ({ item }) => {
   return (
-    <View style={styles.productItemContainer}>
+    <View style={commonStyles.commonContainerItens}>
       <Text style={styles.productItemLabel}>
         {item.name} {item.type} {item.size}
       </Text>
@@ -20,12 +21,12 @@ export default function ProductsOverview() {
   const navigation = useNavigation();
   return (
     <StdBackground>
-      <Text style={styles.productTitle}>Lista de produtos</Text>
+      <Text style={commonStyles.commomTextTitle}>Lista de produtos</Text>
       {products.length > 0 && (
         <View style={styles.productListOverView}>
-          <View style={styles.productListDescriptionContainer}>
-            <Text style={styles.productListDescription}>Produto</Text>
-            <Text style={styles.productListDescription}>Quantidade</Text>
+          <View style={commonStyles.commonContainerLabel}>
+            <Text style={commonStyles.commonDescriptionsText}>Produto</Text>
+            <Text style={commonStyles.commonDescriptionsText}>Quantidade</Text>
           </View>
           <FlatList
             data={products}
