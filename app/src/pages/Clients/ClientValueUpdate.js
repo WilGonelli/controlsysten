@@ -11,6 +11,8 @@ import { StdBackground } from "../../components/Background/StdBackground";
 import { useNavigation } from "@react-navigation/native";
 import { ClientService } from "../../services/ClientService";
 import { styles } from "./style";
+import { commonStyles } from "../../components/style/commonStyle";
+import { StdColor } from "../../components/style/StdStyle";
 
 const TransitionsItens = ({ item }) => {
   if (item.id === 0) {
@@ -19,16 +21,48 @@ const TransitionsItens = ({ item }) => {
   return (
     <View keyExtractor={item.id}>
       {item.type === "spent" ? (
-        <View style={styles.containerHistoryItem}>
-          <Text style={styles.containerHistoryItemLabelSpent}>Gasto</Text>
-          <Text style={styles.containerHistoryItemLabelSpent}>
+        <View style={commonStyles.commonContainerItens}>
+          <Text
+            style={[
+              commonStyles.commonFontSizeLabel,
+              {
+                color: "#8B0000",
+              },
+            ]}
+          >
+            Gasto
+          </Text>
+          <Text
+            style={[
+              commonStyles.commonFontSizeLabel,
+              {
+                color: "#8B0000",
+              },
+            ]}
+          >
             R$-{parseFloat(item.value).toFixed(2).replace(".", ",")}
           </Text>
         </View>
       ) : (
-        <View style={styles.containerHistoryItem}>
-          <Text style={styles.containerHistoryItemLabelSaid}>Pago</Text>
-          <Text style={styles.containerHistoryItemLabelSaid}>
+        <View style={commonStyles.commonContainerItens}>
+          <Text
+            style={[
+              commonStyles.commonFontSizeLabel,
+              {
+                color: "#006400",
+              },
+            ]}
+          >
+            Pago
+          </Text>
+          <Text
+            style={[
+              commonStyles.commonFontSizeLabel,
+              {
+                color: "#006400",
+              },
+            ]}
+          >
             R${parseFloat(item.value).toFixed(2).replace(".", ",")}
           </Text>
         </View>
@@ -60,7 +94,7 @@ export default function ClientValueUpdate({ route }) {
 
   return (
     <StdBackground>
-      <Text style={styles.titleScreen}>Cliente: {client.name}</Text>
+      <Text style={commonStyles.commomTextTitle}>Cliente: {client.name}</Text>
       <View style={styles.containerInputUpdateClient}>
         <Text style={styles.labelInputUpdateClient}>valor:</Text>
         <Text style={styles.cifraoInput}>R$</Text>
@@ -77,7 +111,7 @@ export default function ClientValueUpdate({ route }) {
         <DropDownPicker
           dropDownContainerStyle={styles.inputUpdateClient}
           style={styles.inputUpdateClient}
-          listItemLabelStyle={styles.labelSelectContainer}
+          textStyle={commonStyles.commonLabelSelectContainer}
           open={open}
           value={type}
           items={items}
@@ -86,29 +120,60 @@ export default function ClientValueUpdate({ route }) {
           setItems={setItems}
         />
       </View>
-      <TouchableOpacity style={styles.buttonAddClient} onPress={updateClient}>
-        <Text style={styles.buttonAddText}>Adicionar</Text>
+      <TouchableOpacity
+        style={[
+          commonStyles.commonBtnLarge,
+          { backgroundColor: StdColor.secndaryColor[40] },
+        ]}
+        onPress={updateClient}
+      >
+        <Text
+          style={[commonStyles.commonBtnText, { color: StdColor.black[80] }]}
+        >
+          Adicionar
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.buttonCancel}
+        style={[
+          commonStyles.commonBtnLarge,
+          { backgroundColor: StdColor.black[20] },
+        ]}
         onPress={() => {
           navigation.replace("Overview");
         }}
       >
-        <Text style={styles.buttonCancelText}>Cancelar</Text>
+        <Text
+          style={[commonStyles.commonBtnText, { color: StdColor.white[80] }]}
+        >
+          Cancelar
+        </Text>
       </TouchableOpacity>
       <View style={styles.transitionsHistoryClient}>
         {client.transactions.length > 1 && (
-          <View style={styles.containerFlatListClients}>
-            <Text style={styles.labelHistoryTransitions}>
-              Lista de movimentações
-            </Text>
-            <FlatList
-              data={client.transactions}
-              renderItem={({ item }) => <TransitionsItens item={item} />}
-              keyExtractor={(item) => item.id}
-            />
-          </View>
+          <>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.labelHistoryTransitions}>
+                Lista de movimentações
+              </Text>
+              <FlatList
+                data={client.transactions}
+                renderItem={({ item }) => <TransitionsItens item={item} />}
+                keyExtractor={(item) => item.id}
+              />
+            </View>
+            <View style={styles.TotalTransitions}>
+              <Text style={{ fontSize: 24 }}>Saldo: R$ </Text>
+              {client.debt < 0 ? (
+                <Text style={{ fontSize: 24, color: "#8B0000" }}>
+                  {parseFloat(client.debt).toFixed(2).replace(".", ",")}
+                </Text>
+              ) : (
+                <Text style={{ fontSize: 24, color: "#006400" }}>
+                  {parseFloat(client.debt).toFixed(2).replace(".", ",")}
+                </Text>
+              )}
+            </View>
+          </>
         )}
       </View>
     </StdBackground>

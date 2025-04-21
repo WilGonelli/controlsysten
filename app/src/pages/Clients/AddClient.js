@@ -2,8 +2,11 @@ import React from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { StdBackground } from "../../components/Background/StdBackground";
 import { styles } from "./style";
+import { StdColor } from "../../components/style/StdStyle";
+
 import { useNavigation } from "@react-navigation/native";
 import { ClientService } from "../../services/ClientService";
+import { commonStyles } from "../../components/style/commonStyle";
 
 export default function AddClient() {
   const [name, onChangeName] = React.useState("");
@@ -21,26 +24,43 @@ export default function AddClient() {
 
   return (
     <StdBackground>
-      <Text style={styles.titleScreen}>adicinar Cliente</Text>
-      <Text style={styles.descriptionsText}>Nome:</Text>
+      <Text style={commonStyles.commomTextTitle}>adicionar Cliente</Text>
+      <Text style={commonStyles.commonDescriptionsText}>Nome:</Text>
       <TextInput
         autoFocus={true}
         placeholder="Nome do cliente"
         placeholderTextColor="#fff"
-        style={styles.inputName}
+        style={commonStyles.commonInputText}
         onChangeText={onChangeName}
         value={name}
       />
-      <TouchableOpacity style={styles.buttonAddClient} onPress={addClient}>
-        <Text style={styles.buttonAddText}>Adicionar</Text>
+      <TouchableOpacity
+        style={[
+          commonStyles.commonBtnLarge,
+          { backgroundColor: StdColor.secndaryColor[40] },
+        ]}
+        onPress={addClient}
+      >
+        <Text
+          style={[commonStyles.commonBtnText, { color: StdColor.black[80] }]}
+        >
+          Adicionar
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.buttonCancel}
+        style={[
+          commonStyles.commonBtnLarge,
+          { backgroundColor: StdColor.black[20] },
+        ]}
         onPress={() => {
           navigation.replace("Overview");
         }}
       >
-        <Text style={styles.buttonCancelText}>Cancelar</Text>
+        <Text
+          style={[commonStyles.commonBtnText, { color: StdColor.white[80] }]}
+        >
+          Cancelar
+        </Text>
       </TouchableOpacity>
     </StdBackground>
   );

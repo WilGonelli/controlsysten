@@ -2,42 +2,14 @@ import { StyleSheet } from "react-native";
 import { StdColor } from "../../components/style/StdStyle";
 
 export const styles = StyleSheet.create({
-  containerClients: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItens: "center",
-    height: 60,
-    marginTop: 12,
-  },
-  titleScreen: {
-    color: StdColor.white[80],
-    fontSize: 42,
-    width: "100%",
-    textAlign: "center",
-    marginBottom: 12,
-  },
   iconPlusClient: {
     color: StdColor.secndaryColor[40],
     fontSize: 28,
     position: "absolute",
-    right: 0,
-    top: 8,
+    right: 8,
+    top: 18,
     width: 50,
     height: 50,
-  },
-  containerDescriptions: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-end",
-    height: 50,
-    borderBottomColor: StdColor.white[80],
-    borderBottomWidth: 1,
-  },
-  descriptionsText: {
-    height: 30,
-    color: StdColor.white[80],
-    fontSize: 24,
-    width: "30%",
   },
   clientItem: {
     flexDirection: "row",
@@ -49,12 +21,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 16,
   },
-  clientInfo: {
-    color: StdColor.black[80],
-    fontSize: 22,
-    fontWeight: "bold",
-    justifyContent: "space-between",
-  },
   clientContainerDebt: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -63,45 +29,7 @@ export const styles = StyleSheet.create({
     height: 50,
     paddingLeft: 32,
   },
-  inputName: {
-    height: 50,
-    width: "100%",
-    backgroundColor: StdColor.white[20],
-    borderRadius: 16,
-    paddingLeft: 16,
-    marginTop: 12,
-    color: StdColor.black[80],
-    fontSize: 22,
-    fontWeight: "bold",
-  },
-  buttonAddClient: {
-    backgroundColor: StdColor.secndaryColor[40],
-    width: "100%",
-    height: 50,
-    borderRadius: 16,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 12,
-  },
-  buttonCancel: {
-    backgroundColor: StdColor.black[20],
-    width: "100%",
-    height: 50,
-    borderRadius: 16,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 12,
-  },
-  buttonAddText: {
-    color: StdColor.black[80],
-    fontSize: 22,
-    fontWeight: "bold",
-  },
-  buttonCancelText: {
-    color: StdColor.white[80],
-    fontSize: 22,
-    fontWeight: "bold",
-  },
+
   containerInputUpdateClient: {
     flexDirection: "row",
     width: "100%",
@@ -133,22 +61,6 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingLeft: 50,
   },
-  clientInfoNegative: {
-    color: "#8B0000",
-    fontSize: 22,
-    fontWeight: "bold",
-    justifyContent: "space-between",
-  },
-  clientInfoPositive: {
-    color: "#006400",
-    fontSize: 22,
-    fontWeight: "bold",
-    justifyContent: "space-between",
-  },
-  labelSelectContainer: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
   transitionsHistoryClient: {
     flex: 1,
     backgroundColor: StdColor.white[40],
@@ -157,27 +69,17 @@ export const styles = StyleSheet.create({
     marginTop: 28,
     overflow: "hidden",
   },
-  containerFlatListClients: {
-    flex: 1,
-  },
   labelHistoryTransitions: {
     fontSize: 20,
     textAlign: "center",
     borderBottomWidth: 2,
   },
-  containerHistoryItem: {
+
+  TotalTransitions: {
+    paddingHorizontal: 24,
+    borderTopWidth: 2,
+    alignItems: "flex-end",
     flexDirection: "row",
-    borderBottomWidth: 1.5,
-    marginHorizontal: 16,
-    marginTop: 6,
-    justifyContent: "space-between",
-  },
-  containerHistoryItemLabelSpent: {
-    fontSize: 18,
-    color: "#8B0000",
-  },
-  containerHistoryItemLabelSaid: {
-    fontSize: 18,
-    color: "#006400",
+    justifyContent: "flex-end",
   },
 });
