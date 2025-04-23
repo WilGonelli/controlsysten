@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import products from "../../mocks/productsMocked.json";
 
-import { StdBackground } from "../../components/Background/StdBackground";
+import StdBackground from "../../components/Background/StdBackground";
 
 export default function ProductSale() {
   const [open, setOpen] = useState(false);
@@ -62,7 +62,7 @@ export default function ProductSale() {
       <TouchableOpacity
         style={[
           commonStyles.commonBtnLarge,
-          { backgroundColor: StdColor.secndaryColor[40] },
+          { backgroundColor: StdColor.secundaryColor[40] },
         ]}
       >
         <Text

@@ -1,10 +1,10 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import ProductsOverview from "./ProductsOverview";
-import ProductBuy from "./ProductBuy";
-import ProductSale from "./ProductSale";
+import ProductsOverview from "../../views/Products/ProductsOverview";
+import ProductBuy from "../../views/Products/ProductBuy";
+import ProductSale from "../../views/Products/ProductSale";
 
-export default function RootProducts() {
+export default function ProductsRoot() {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

@@ -1,9 +1,9 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import RootClients from "./Clients/RootClients";
-import RootProducts from "./Products/RootProducts";
-import Blank from "./Blank/Blank";
+import ClientsRoot from "./ClientsRoot/ClientsRoot";
+import ProductsRoot from "./ProductsRoot/ProductsRoot";
+import Blank from "../views/Blank/Blank";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { StdColor } from "../components/style/StdStyle";
 
@@ -15,7 +15,7 @@ export default function TabsRoot() {
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: StdColor.primaryColor[100],
-          tabBarInactiveTintColor: StdColor.secndaryColor[100],
+          tabBarInactiveTintColor: StdColor.secundaryColor[100],
           tabBarStyle: {
             backgroundColor: StdColor.black[80],
           },
@@ -28,7 +28,7 @@ export default function TabsRoot() {
             ),
           }}
           name="Clientes"
-          component={RootClients}
+          component={ClientsRoot}
         />
         <Tab.Screen
           options={{
@@ -37,7 +37,7 @@ export default function TabsRoot() {
             ),
           }}
           name="Produtos"
-          component={RootProducts}
+          component={ProductsRoot}
         />
         <Tab.Screen
           options={{

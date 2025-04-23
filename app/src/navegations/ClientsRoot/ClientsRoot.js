@@ -1,15 +1,13 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import ClientsOverview from "./ClientsOverview";
-import AddClient from "./AddClient";
-import ClientValueUpdate from "./ClientValueUpdate";
+import ClientsOverview from "../../views/Clients/ClientsOverview";
+import ClientValueUpdate from "../../views/Clients/ClientValueUpdate";
 
-export default function RootClients() {
+export default function ClientsRoot() {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Overview" component={ClientsOverview} />
-      <Stack.Screen name="AddClient" component={AddClient} />
       <Stack.Screen name="UpdateClient" component={ClientValueUpdate} />
     </Stack.Navigator>
   );

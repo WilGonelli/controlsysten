@@ -1,52 +1,27 @@
 import { loadClients, storageClients, clearStorage } from "./DbLocalStorage";
+import Client from "../models/clientModel";
 
-class Client {
-  constructor(name) {
-    (this.id = Date.now()), (this.name = name);
-    this.debt = 0.0;
-    this.lastTransaction = Date.now();
-    this.transactions = [
-      {
-        id: 0,
-        value: 0.0,
-        type: "initial",
-      },
-    ];
-  }
-}
 export const ClientService = {
   getAllClients: async () => {
-    const clientList = await loadClients();
-    const sortedClients = clientList.sort(
-      (a, b) => b.lastTansition - a.lastTansition
-    );
-    return clientList;
+    const rawList = await loadClients();
+    const clientList = rawList.map(Client.fromObject);
+    return clientList.sort((a, b) => b.lastTransaction - a.lastTransaction);
   },
 
   createClient: async (name) => {
-    const client = await new Client(name);
-    const clientList = await loadClients();
+    const client = new Client(name);
+    const clientList = await ClientService.getAllClients();
     clientList.push(client);
-    await storageClients(clientList);
+    await storageClients(clientList.map((c) => c.toObject()));
   },
 
-  updateClient: async (idClient, value, typeMovimentation) => {
-    const clientList = await loadClients();
-    const client = clientList.find((item) => item.id === idClient);
-    client.lastTansition = Date.now();
-    const transitionsToSave = {
-      id: client.transactions.length,
-      value: value,
-      type: typeMovimentation,
-    };
-    client.transactions.push(transitionsToSave);
-    if (typeMovimentation === "spent") {
-      client.debt -= parseFloat(value);
+  updateClient: async (idClient, value, type) => {
+    const clientList = await ClientService.getAllClients();
+    const client = clientList.find((c) => c.id === idClient);
+    if (client) {
+      client.addTransaction(value, type);
+      await storageClients(clientList.map((c) => c.toObject()));
     }
-    if (typeMovimentation === "paid") {
-      client.debt += parseFloat(value);
-    }
-    await storageClients(clientList);
   },
 
   removedb: async () => {

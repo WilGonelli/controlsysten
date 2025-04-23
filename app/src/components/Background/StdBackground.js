@@ -3,7 +3,7 @@ import { View, SafeAreaView, Image } from "react-native";
 import { styles } from "./style";
 import image from "../../../assets/pavao.png";
 
-export function StdBackground({ children }) {
+export default function StdBackground({ children }) {
   return (
     <SafeAreaView style={styles.StdBackground}>
       <View style={styles.StdContainer}>{children}</View>

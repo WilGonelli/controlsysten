@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { styles } from "./style";
-import { StdBackground } from "../../components/Background/StdBackground";
+import StdBackground from "../../components/Background/StdBackground";
 import { useNavigation } from "@react-navigation/native";
 import products from "../../mocks/productsMocked.json";
 import { commonStyles } from "../../components/style/commonStyle";

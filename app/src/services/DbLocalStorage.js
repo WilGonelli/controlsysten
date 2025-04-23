@@ -1,8 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const CLIENT_KEY = "@clients";
+
 export const loadClients = async () => {
   try {
-    const data = await AsyncStorage.getItem("@clients");
+    const data = await AsyncStorage.getItem(CLIENT_KEY);
     return data != null ? JSON.parse(data) : [];
   } catch (e) {
     console.log(e);
@@ -13,7 +15,7 @@ export const loadClients = async () => {
 export const storageClients = async (clientList) => {
   try {
     const data = JSON.stringify(clientList);
-    await AsyncStorage.setItem("@clients", data);
+    await AsyncStorage.setItem(CLIENT_KEY, data);
   } catch (e) {
     console.log(e);
   }
@@ -21,8 +23,8 @@ export const storageClients = async (clientList) => {
 
 export const clearStorage = async () => {
   try {
-    await AsyncStorage.clear();
+    await AsyncStorage.clear(CLIENT_KEY);
   } catch (e) {
-    console.error("Erro ao limpar o armazenamento:", e);
+    console.error(e);
   }
 };
