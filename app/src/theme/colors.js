@@ -19,6 +19,7 @@ const Colors = {
   green: "#8B0000",
   red: "#006400",
   backgroundDefault: "#0B192C",
+  beige: "#F5F5DC",
 };
 
 export default Colors;

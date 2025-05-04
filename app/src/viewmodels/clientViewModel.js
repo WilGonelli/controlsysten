@@ -4,7 +4,15 @@ import { ClientService } from "../services/ClientService";
 export const useClientViewModel = () => {
   const [clients, setClients] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValueName, setInputValueName] = useState("");
+
+  const [inputValuePrice, setInputValuePrice] = useState(0);
+  const [openDropDownPicker, setOpenDropDownPicker] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("spent");
+  const [optionsItems, setOptionsItems] = useState([
+    { label: "Gasto", value: "spent" },
+    { label: "Pago", value: "paid" },
+  ]);
 
   const fetchClients = async () => {
     const data = await ClientService.getAllClients();
@@ -12,9 +20,9 @@ export const useClientViewModel = () => {
   };
 
   const createClient = async () => {
-    if (!inputValue.trim()) return;
-    await ClientService.createClient(inputValue);
-    setInputValue("");
+    if (!inputValueName.trim()) return;
+    await ClientService.createClient(inputValueName);
+    setInputValueName("");
     setModalVisible(false);
     fetchClients();
   };
@@ -24,6 +32,19 @@ export const useClientViewModel = () => {
     fetchClients();
   };
 
+  const updateClient = async (id) => {
+    if (inputValuePrice !== 0) {
+      await ClientService.updateClient(id, inputValuePrice, selectedItem);
+      fetchClients();
+    }
+  };
+
+  const updateClientName = async (id) => {
+    await ClientService.updateClientName(id, inputValueName);
+    fetchClients();
+    setModalVisible(false);
+  };
+
   useEffect(() => {
     fetchClients();
   }, []);
@@ -31,11 +52,22 @@ export const useClientViewModel = () => {
   return {
     clients,
     modalVisible,
-    inputValue,
-    setInputValue,
+    inputValueName,
+    inputValuePrice,
+    selectedItem,
+    openDropDownPicker,
+    optionsItems,
+    setInputValueName,
+    setInputValuePrice,
+    setOpenDropDownPicker,
+    setSelectedItem,
+    setOptionsItems,
+    fetchClients,
     openModal: () => setModalVisible(true),
     closeModal: () => setModalVisible(false),
     createClient,
     removeAllClients,
+    updateClient,
+    updateClientName,
   };
 };

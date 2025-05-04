@@ -1,4 +1,8 @@
-import { loadClients, storageClients, clearStorage } from "./DbLocalStorage";
+import {
+  loadClients,
+  storageClients,
+  clearStorageClient,
+} from "./DbLocalStorage";
 import Client from "../models/clientModel";
 
 export const ClientService = {
@@ -12,7 +16,7 @@ export const ClientService = {
     const client = new Client(name);
     const clientList = await ClientService.getAllClients();
     clientList.push(client);
-    await storageClients(clientList.map((c) => c.toObject()));
+    await storageClients(clientList);
   },
 
   updateClient: async (idClient, value, type) => {
@@ -20,11 +24,20 @@ export const ClientService = {
     const client = clientList.find((c) => c.id === idClient);
     if (client) {
       client.addTransaction(value, type);
-      await storageClients(clientList.map((c) => c.toObject()));
+      await storageClients(clientList);
+    }
+  },
+
+  updateClientName: async (idClient, clientName) => {
+    const clientList = await ClientService.getAllClients();
+    const client = clientList.find((c) => c.id === idClient);
+    if (client) {
+      client.name = clientName;
+      await storageClients(clientList);
     }
   },
 
   removedb: async () => {
-    await clearStorage();
+    await clearStorageClient();
   },
 };

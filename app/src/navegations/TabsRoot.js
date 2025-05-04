@@ -3,9 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ClientsRoot from "./ClientsRoot/ClientsRoot";
 import ProductsRoot from "./ProductsRoot/ProductsRoot";
-import Blank from "../views/Blank/Blank";
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
-import { StdColor } from "../components/style/StdStyle";
+import { FontAwesome5 } from "@expo/vector-icons";
+import Colors from "../theme/colors";
 
 export default function TabsRoot() {
   const Tab = createBottomTabNavigator();
@@ -14,10 +13,10 @@ export default function TabsRoot() {
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: StdColor.primaryColor[100],
-          tabBarInactiveTintColor: StdColor.secundaryColor[100],
+          tabBarActiveTintColor: Colors.primaryColor[100],
+          tabBarInactiveTintColor: Colors.secundaryColor[100],
           tabBarStyle: {
-            backgroundColor: StdColor.black[80],
+            backgroundColor: "#2b2b2b",
           },
         }}
       >
@@ -38,34 +37,6 @@ export default function TabsRoot() {
           }}
           name="Produtos"
           component={ProductsRoot}
-        />
-        <Tab.Screen
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="slot-machine"
-                machinedecks
-                size={24}
-                color={color}
-              />
-            ),
-          }}
-          name="Maquinas"
-          component={Blank}
-        />
-        <Tab.Screen
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="cards-playing"
-                machinedecks
-                size={24}
-                color={color}
-              />
-            ),
-          }}
-          name="Caxeta"
-          component={Blank}
         />
       </Tab.Navigator>
     </NavigationContainer>

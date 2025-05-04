@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: Metrics.margin.medium,
+    zIndex: 5,
   },
 });
 

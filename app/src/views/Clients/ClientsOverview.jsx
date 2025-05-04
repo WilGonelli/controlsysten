@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
-import StdBackground from "../../components/Background/StdBackground";
+import BackgroundDefault from "../../components/Background/BackgroundDefault";
 import CustomButton from "../../components/CustomButton";
 import ModalNewClient from "./ModalNewClient";
 
@@ -16,7 +16,7 @@ import { useClientViewModel } from "../../viewmodels/clientViewModel";
 const ClientItem = ({ item, navigation }) => (
   <TouchableOpacity
     style={styles.clientItem}
-    onPress={() => navigation.replace("UpdateClient", { client: item })}
+    onPress={() => navigation.navigate("UpdateClient", { client: item })}
   >
     <Text style={globalStyle.textCustomButton}>{item.name}</Text>
     <View style={globalStyle.containerItens}>
@@ -24,7 +24,7 @@ const ClientItem = ({ item, navigation }) => (
       <Text
         style={[
           globalStyle.textCustomButton,
-          { color: parseFloat(item.debt) > 0 ? Colors.red : Colors.green },
+          { color: parseFloat(item.debt) >= 0 ? Colors.red : Colors.green },
         ]}
       >
         {parseFloat(item.debt).toFixed(2).replace(".", ",")}
@@ -37,25 +37,32 @@ export default function ClientsOverview() {
   const {
     clients,
     modalVisible,
-    inputValue,
-    setInputValue,
+    inputValueName,
+    setInputValueName,
     openModal,
     closeModal,
     createClient,
     removeAllClients,
+    fetchClients,
   } = useClientViewModel();
 
   const navigation = useNavigation();
 
+  useFocusEffect(
+    useCallback(() => {
+      fetchClients();
+    }, [])
+  );
+
   return (
-    <StdBackground>
+    <BackgroundDefault>
       <Text style={globalStyle.title}>Clientes</Text>
 
-      <TouchableOpacity style={styles.iconPlusClient} onPress={openModal}>
+      <TouchableOpacity style={globalStyle.icon} onPress={openModal}>
         <FontAwesome5
           name="user-plus"
-          size={24}
-          style={styles.iconPlusClient}
+          size={18}
+          style={[globalStyle.icon, { fontSize: 32 }]}
         />
       </TouchableOpacity>
 
@@ -75,16 +82,17 @@ export default function ClientsOverview() {
       />
 
       <TouchableOpacity onPress={removeAllClients}>
-        <Text>Apagar Todos</Text>
+        <Text style={{ color: "black" }}>Apagar</Text>
       </TouchableOpacity>
 
       <ModalNewClient
         visible={modalVisible}
         onClose={closeModal}
         onSave={createClient}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
+        inputValue={inputValueName}
+        setInputValue={setInputValueName}
+        modalTitle={"Criar"}
       />
-    </StdBackground>
+    </BackgroundDefault>
   );
 }

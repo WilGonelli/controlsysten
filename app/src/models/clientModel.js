@@ -38,14 +38,4 @@ export default class Client {
     client.transactions = obj.transactions;
     return client;
   }
-
-  toObject() {
-    return {
-      id: this.id,
-      name: this.name,
-      debt: this.debt,
-      lastTransaction: this.lastTransaction,
-      transactions: this.transactions,
-    };
-  }
 }

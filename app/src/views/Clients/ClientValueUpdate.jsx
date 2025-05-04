@@ -1,14 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, FlatList } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { ClientService } from "../../services/ClientService";
-import StdBackground from "../../components/Background/StdBackground";
+import BackgroundDefault from "../../components/Background/BackgroundDefault";
 import CustomButton from "./../../components/CustomButton/index";
+import { FontAwesome5 } from "@expo/vector-icons";
+import ModalNewClient from "./ModalNewClient";
 
 import { styles } from "./style";
 import globalStyle from "./../../theme/globalStyle";
 import Colors from "./../../theme/colors";
+import { useClientViewModel } from "../../viewmodels/clientViewModel";
 
 const TransitionsItens = ({ item }) => {
   if (item.id === 0) {
@@ -44,96 +53,122 @@ const TransitionsItens = ({ item }) => {
 
 export default function ClientValueUpdate({ route }) {
   const { client } = route.params;
-  const [open, setOpen] = useState(false);
-  const [type, setType] = useState("spent");
-  const [value, setValue] = useState(0);
-  const [items, setItems] = useState([
-    { label: "Gasto", value: "spent" },
-    { label: "Pago", value: "paid" },
-  ]);
+  const {
+    inputValuePrice,
+    setInputValuePrice,
+    selectedItem,
+    setSelectedItem,
+    openDropDownPicker,
+    setOpenDropDownPicker,
+    optionsItems,
+    updateClient,
+    setOptionsItems,
+    updateClientName,
+
+    modalVisible,
+    inputValueName,
+    setInputValueName,
+    openModal,
+    closeModal,
+    createClient,
+    removeAllClients,
+    fetchClients,
+  } = useClientViewModel();
 
   const navigation = useNavigation();
 
-  const updateClient = async () => {
-    if (value > 0) {
-      await ClientService.updateClient(client.id, value, type);
-      navigation.replace("Overview");
-    } else {
-      alert("adicione um valor valido");
-    }
-  };
-
-  const backSreem = () => {
-    navigation.replace("Overview");
-  };
+  useEffect(() => {
+    setInputValueName(client.name);
+  }, []);
 
   return (
-    <StdBackground>
-      <Text style={globalStyle.title}>Cliente: {client.name}</Text>
+    <BackgroundDefault>
+      <Text style={globalStyle.title}>Cliente:</Text>
+      <TouchableOpacity style={globalStyle.icon} onPress={openModal}>
+        <FontAwesome5 name="user-edit" style={globalStyle.icon} />
+      </TouchableOpacity>
+      <Text style={globalStyle.title}>{client.name}</Text>
       <View style={[globalStyle.containerSubTitle, { borderBottomWidth: 0 }]}>
         <Text style={styles.labelInputUpdateClient}>valor:</Text>
         <Text style={styles.cifraoInput}>R$</Text>
         <TextInput
           style={styles.inputUpdateClient}
-          value={value}
-          onChangeText={setValue}
+          value={inputValuePrice}
+          onChangeText={setInputValuePrice}
           inputMode="numeric"
           textAlign="center"
         />
       </View>
-      <View style={[globalStyle.containerSubTitle, { borderBottomWidth: 0 }]}>
+      <View
+        style={[
+          globalStyle.containerSubTitle,
+          { borderBottomWidth: 0, zIndex: 1000, elevation: 10 },
+        ]}
+      >
         <Text style={styles.labelInputUpdateClient}>operação:</Text>
         <DropDownPicker
           dropDownContainerStyle={styles.inputUpdateClient}
           style={styles.inputUpdateClient}
           textStyle={[globalStyle.textItens, { color: Colors.black }]}
-          open={open}
-          value={type}
-          items={items}
-          setOpen={setOpen}
-          setValue={setType}
-          setItems={setItems}
+          open={openDropDownPicker}
+          value={selectedItem}
+          items={optionsItems}
+          setOpen={setOpenDropDownPicker}
+          setValue={setSelectedItem}
+          setItems={setOptionsItems}
         />
       </View>
       <CustomButton
         text={"Adicionar"}
         backgroundColor={Colors.primaryColor[60]}
-        onPress={updateClient}
+        onPress={async () => {
+          await updateClient(client.id);
+          navigation.goBack();
+        }}
       />
       <CustomButton
         text={"Cancelar"}
         backgroundColor={Colors.secundaryColor[20]}
-        onPress={backSreem}
+        onPress={() => navigation.goBack()}
       />
-      <View style={styles.transitionsHistoryClient}>
-        {client.transactions.length > 1 && (
-          <>
-            <View style={{ flex: 1 }}>
-              <Text style={globalStyle.textCustomButton}>
-                Lista de movimentações
-              </Text>
-              <FlatList
-                data={client.transactions}
-                renderItem={({ item }) => <TransitionsItens item={item} />}
-                keyExtractor={(item) => item.id}
-              />
-            </View>
-            <View style={styles.TotalTransitions}>
-              <Text style={{ fontSize: 24 }}>Saldo: R$ </Text>
-              <Text
-                style={[
-                  globalStyle.textItens,
-                  client.debt < 0
-                    ? { color: Colors.green }
-                    : { color: Colors.red },
-                ]}
-              >
-                {parseFloat(client.debt).toFixed(2).replace(".", ",")}
-              </Text>
-            </View>
-          </>
-        )}
-      </View>
-    </StdBackground>
+      {client.transactions.length > 1 && (
+        <View style={styles.transitionsHistoryClient}>
+          <View style={{ flex: 1 }}>
+            <Text style={globalStyle.textCustomButton}>
+              Lista de movimentações
+            </Text>
+            <FlatList
+              data={client.transactions}
+              renderItem={({ item }) => <TransitionsItens item={item} />}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
+          <View style={styles.TotalTransitions}>
+            <Text style={{ fontSize: 24 }}>Saldo: R$ </Text>
+            <Text
+              style={[
+                globalStyle.textItens,
+                client.debt < 0
+                  ? { color: Colors.green }
+                  : { color: Colors.red },
+              ]}
+            >
+              {parseFloat(client.debt).toFixed(2).replace(".", ",")}
+            </Text>
+          </View>
+        </View>
+      )}
+      <ModalNewClient
+        visible={modalVisible}
+        onClose={closeModal}
+        onSave={async () => {
+          await updateClientName(client.id);
+          navigation.goBack();
+        }}
+        inputValue={inputValueName}
+        setInputValue={setInputValueName}
+        modalTitle={"Atualizar"}
+      />
+    </BackgroundDefault>
   );
 }

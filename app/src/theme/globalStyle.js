@@ -12,6 +12,7 @@ const globalStyle = StyleSheet.create({
     color: Colors.white,
     fontWeight: Fonts.fontWeight.bold,
     width: "100%",
+    textAlignVertical: "center",
   },
   subTitle: {
     fontSize: Fonts.fontSize.subTitle,
@@ -19,19 +20,23 @@ const globalStyle = StyleSheet.create({
     fontWeight: Fonts.fontWeight.medium,
     minWidth: "50%",
     paddingHorizontal: Metrics.padding.medium,
+    textAlignVertical: "center",
   },
   textItens: {
     height: 30,
     color: Colors.white,
     fontSize: Fonts.fontSize.text,
+    textAlignVertical: "center",
   },
   textCustomButton: {
     fontSize: 22,
     fontWeight: "bold",
     color: Colors.black,
     textAlign: "center",
+    textAlignVertical: "center",
   },
   containerSubTitle: {
+    position: "relative",
     marginTop: Metrics.margin.medium,
     flexDirection: "row",
     borderBottomColor: Colors.white,
@@ -43,6 +48,22 @@ const globalStyle = StyleSheet.create({
     marginHorizontal: Metrics.margin.medium,
     marginTop: Metrics.margin.small,
     justifyContent: "space-between",
+  },
+  icon: {
+    color: Colors.secundaryColor[20],
+    fontSize: 36,
+    position: "absolute",
+    right: 0,
+    top: 8,
+    width: 50,
+    height: 50,
+  },
+  input: {
+    borderBottomWidth: 1,
+    marginBottom: 10,
+    color: Colors.black,
+    fontSize: 22,
+    paddingHorizontal: Metrics.padding.medium,
   },
 });
 

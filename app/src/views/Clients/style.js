@@ -20,28 +20,19 @@ export const styles = StyleSheet.create({
   input: {
     borderBottomWidth: 1,
     marginBottom: 10,
+    color: Colors.black,
+    fontSize: 22,
   },
-
   //Clients overview styles
-  iconPlusClient: {
-    color: Colors.secundaryColor[40],
-    fontSize: 28,
-    position: "absolute",
-    right: 8,
-    top: 18,
-    width: 50,
-    height: 50,
-  },
   clientItem: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: Colors.secundaryColor[40],
+    backgroundColor: Colors.beige,
     marginTop: Metrics.margin.medium,
     paddingHorizontal: Metrics.padding.medium,
     borderRadius: Metrics.borderRadius.medium,
   },
-
   //Client update value styles
   labelInputUpdateClient: {
     color: Colors.gray,
@@ -49,14 +40,15 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     width: "50%",
     textAlign: "center",
+    textAlignVertical: "center",
   },
   cifraoInput: {
     position: "absolute",
     color: Colors.black,
     fontSize: Fonts.fontSize.subTitle,
     left: "55%",
-    top: 10,
-    zIndex: 3,
+    top: 8,
+    zIndex: 200,
   },
   inputUpdateClient: {
     backgroundColor: Colors.white,
@@ -66,6 +58,7 @@ export const styles = StyleSheet.create({
     fontSize: Fonts.fontSize.subTitle,
     fontWeight: "bold",
     paddingLeft: 55,
+    zIndex: 10,
   },
   transitionsHistoryClient: {
     flex: 1,
