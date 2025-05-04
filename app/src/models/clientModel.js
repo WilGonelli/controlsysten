@@ -4,6 +4,7 @@ export default class Client {
     this.name = name;
     this.debt = 0.0;
     this.lastTransaction = Date.now();
+    this.isArchived = false;
     this.transactions = [
       {
         id: 0,
@@ -35,6 +36,7 @@ export default class Client {
     client.id = obj.id;
     client.debt = obj.debt;
     client.lastTransaction = obj.lastTransaction;
+    client.isArchived = obj.isArchived;
     client.transactions = obj.transactions;
     return client;
   }

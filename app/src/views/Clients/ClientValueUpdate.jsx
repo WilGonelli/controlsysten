@@ -73,6 +73,7 @@ export default function ClientValueUpdate({ route }) {
     createClient,
     removeAllClients,
     fetchClients,
+    archivedClient,
   } = useClientViewModel();
 
   const navigation = useNavigation();
@@ -165,9 +166,14 @@ export default function ClientValueUpdate({ route }) {
           await updateClientName(client.id);
           navigation.goBack();
         }}
+        onArchived={async () => {
+          await archivedClient(client.id);
+          navigation.goBack();
+        }}
         inputValue={inputValueName}
         setInputValue={setInputValueName}
-        modalTitle={"Atualizar"}
+        modalTitle={"Atualizar usuário"}
+        archivedOn={true}
       />
     </BackgroundDefault>
   );

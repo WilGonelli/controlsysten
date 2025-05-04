@@ -54,7 +54,7 @@ const globalStyle = StyleSheet.create({
     fontSize: 36,
     position: "absolute",
     right: 0,
-    top: 8,
+    top: 18,
     width: 50,
     height: 50,
   },

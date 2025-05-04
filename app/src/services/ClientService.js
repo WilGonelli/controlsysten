@@ -37,6 +37,15 @@ export const ClientService = {
     }
   },
 
+  archivedClient: async (idClient) => {
+    const clientList = await ClientService.getAllClients();
+    const client = clientList.find((c) => c.id === idClient);
+    if (client) {
+      client.isArchived = true;
+      await storageClients(clientList);
+    }
+  },
+
   removedb: async () => {
     await clearStorageClient();
   },

@@ -44,6 +44,12 @@ export const useClientViewModel = () => {
     fetchClients();
     setModalVisible(false);
   };
+  const archivedClient = async (id) => {
+    console.log(id);
+    await ClientService.archivedClient(id);
+    fetchClients();
+    setModalVisible(false);
+  };
 
   useEffect(() => {
     fetchClients();
@@ -69,5 +75,6 @@ export const useClientViewModel = () => {
     removeAllClients,
     updateClient,
     updateClientName,
+    archivedClient,
   };
 };

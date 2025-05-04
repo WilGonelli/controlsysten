@@ -2,6 +2,7 @@ import { Modal, View, TextInput, StyleSheet, Text } from "react-native";
 import CustomButton from "../../components/CustomButton";
 import Colors from "../../theme/colors";
 import { styles } from "./style";
+import globalStyle from "../../theme/globalStyle";
 
 export default function ModalNewProduct({
   visible,
@@ -25,21 +26,21 @@ export default function ModalNewProduct({
             placeholderTextColor="#808080"
             value={inputValue1}
             onChangeText={setInputValue1}
-            style={styles.input}
+            style={globalStyle.input}
           />
           <TextInput
             placeholder="Digite o tipo (ex.:lata)"
             placeholderTextColor="#808080"
             value={inputValue2}
             onChangeText={setInputValue2}
-            style={styles.input}
+            style={globalStyle.input}
           />
           <TextInput
             placeholder="Digite o tamanho (ex.: 350ml)"
             placeholderTextColor="#808080"
             value={inputValue3}
             onChangeText={setInputValue3}
-            style={styles.input}
+            style={globalStyle.input}
           />
           <TextInput
             placeholder="Digite o preço de venda"
@@ -50,7 +51,7 @@ export default function ModalNewProduct({
               const format = text.replace(".", ",");
               setInputValue4(format);
             }}
-            style={styles.input}
+            style={globalStyle.input}
           />
           <CustomButton
             text={"Salvar"}

@@ -13,25 +13,28 @@ import Colors from "../../theme/colors";
 
 import { useClientViewModel } from "../../viewmodels/clientViewModel";
 
-const ClientItem = ({ item, navigation }) => (
-  <TouchableOpacity
-    style={styles.clientItem}
-    onPress={() => navigation.navigate("UpdateClient", { client: item })}
-  >
-    <Text style={globalStyle.textCustomButton}>{item.name}</Text>
-    <View style={globalStyle.containerItens}>
-      <Text style={globalStyle.textCustomButton}>R$ </Text>
-      <Text
-        style={[
-          globalStyle.textCustomButton,
-          { color: parseFloat(item.debt) >= 0 ? Colors.red : Colors.green },
-        ]}
-      >
-        {parseFloat(item.debt).toFixed(2).replace(".", ",")}
-      </Text>
-    </View>
-  </TouchableOpacity>
-);
+const ClientItem = ({ item, navigation }) => {
+  if (item.isArchived) return <></>;
+  return (
+    <TouchableOpacity
+      style={styles.clientItem}
+      onPress={() => navigation.navigate("UpdateClient", { client: item })}
+    >
+      <Text style={globalStyle.textCustomButton}>{item.name}</Text>
+      <View style={globalStyle.containerItens}>
+        <Text style={globalStyle.textCustomButton}>R$ </Text>
+        <Text
+          style={[
+            globalStyle.textCustomButton,
+            { color: parseFloat(item.debt) >= 0 ? Colors.red : Colors.green },
+          ]}
+        >
+          {parseFloat(item.debt).toFixed(2).replace(".", ",")}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 export default function ClientsOverview() {
   const {
@@ -91,7 +94,8 @@ export default function ClientsOverview() {
         onSave={createClient}
         inputValue={inputValueName}
         setInputValue={setInputValueName}
-        modalTitle={"Criar"}
+        modalTitle={"Criar usuário"}
+        archivedOn={false}
       />
     </BackgroundDefault>
   );

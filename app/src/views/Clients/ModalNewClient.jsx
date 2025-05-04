@@ -8,18 +8,19 @@ export default function ModalNewClient({
   visible,
   onClose,
   onSave,
+  onArchived,
   inputValue,
   setInputValue,
   modalTitle,
+  archivedOn,
 }) {
   return (
     <Modal visible={visible} transparent animationType="slide">
       <View style={styles.modalBackground}>
         <View style={styles.modalContainer}>
           <Text style={[globalStyle.subTitle, { color: Colors.black }]}>
-            {modalTitle} usuario:
+            {modalTitle}:
           </Text>
-
           <TextInput
             placeholder="Digite o Nome"
             placeholderTextColor="#808080"
@@ -28,10 +29,18 @@ export default function ModalNewClient({
             style={globalStyle.input}
           />
           <CustomButton
-            text={"Salvar"}
+            text={modalTitle}
             onPress={onSave}
             backgroundColor={Colors.primaryColor[60]}
           />
+          {archivedOn && (
+            <CustomButton
+              text={"Arquivar usuário"}
+              onPress={onArchived}
+              backgroundColor={Colors.secundaryColor[60]}
+            />
+          )}
+
           <CustomButton
             text={"Cancelar"}
             onPress={onClose}
