@@ -22,7 +22,6 @@ export const useClientViewModel = () => {
       );
       setClients(dataFiltred);
     } else {
-      console.log("aki2");
       const dataFiltred = await data.filter(
         (client) => client.isArchived === true
       );
@@ -66,7 +65,6 @@ export const useClientViewModel = () => {
     setModalVisible(false);
   };
   const archivedClient = async (id) => {
-    console.log(id);
     await ClientService.archivedClient(id);
     fetchClients();
     setModalVisible(false);

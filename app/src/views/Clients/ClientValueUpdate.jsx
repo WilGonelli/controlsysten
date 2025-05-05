@@ -177,7 +177,7 @@ export default function ClientValueUpdate({ route }) {
         inputValue={inputValueName}
         setInputValue={setInputValueName}
         modalTitle={"Atualizar usuário"}
-        archivedOn={true}
+        archivedOn={client.isArchived ? "Desarquivar" : "Arquivar"}
       />
     </BackgroundDefault>
   );

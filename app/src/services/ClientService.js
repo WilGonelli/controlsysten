@@ -41,7 +41,7 @@ export const ClientService = {
     const clientList = await ClientService.getAllClients();
     const client = clientList.find((c) => c.id === idClient);
     if (client) {
-      client.isArchived = true;
+      client.isArchived = !client.isArchived;
       await storageClients(clientList);
     }
   },

@@ -35,7 +35,7 @@ export default function ModalNewClient({
           />
           {archivedOn && (
             <CustomButton
-              text={"Arquivar usuário"}
+              text={`${archivedOn} cliente`}
               onPress={onArchived}
               backgroundColor={Colors.secundaryColor[60]}
             />
