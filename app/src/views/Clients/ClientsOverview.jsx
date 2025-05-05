@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, AntDesign } from "@expo/vector-icons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 import BackgroundDefault from "../../components/Background/BackgroundDefault";
@@ -14,7 +14,6 @@ import Colors from "../../theme/colors";
 import { useClientViewModel } from "../../viewmodels/clientViewModel";
 
 const ClientItem = ({ item, navigation }) => {
-  if (item.isArchived) return <></>;
   return (
     <TouchableOpacity
       style={styles.clientItem}
@@ -40,7 +39,8 @@ const ClientItem = ({ item, navigation }) => {
   );
 };
 
-export default function ClientsOverview() {
+export default function ClientsOverview({ route }) {
+  const { clientsRender } = route.params;
   const {
     clients,
     modalVisible,
@@ -55,21 +55,39 @@ export default function ClientsOverview() {
 
   const navigation = useNavigation();
 
+  useEffect(() => {
+    fetchClients(clientsRender);
+  }, []);
+
   useFocusEffect(
     useCallback(() => {
-      fetchClients();
+      fetchClients(clientsRender);
     }, [])
   );
 
   return (
     <BackgroundDefault>
-      <Text style={globalStyle.title}>Clientes recentes</Text>
+      <TouchableOpacity
+        style={[globalStyle.icon, { left: 8, zIndex: 12 }]}
+        onPress={() => {
+          navigation.openDrawer();
+        }}
+      >
+        <AntDesign
+          name="menuunfold"
+          style={[globalStyle.icon, { left: 8, color: Colors.white }]}
+        />
+      </TouchableOpacity>
+      <Text style={globalStyle.title}>Clientes</Text>
+      <Text style={[globalStyle.title, { marginTop: -14 }]}>
+        {clientsRender}
+      </Text>
 
       <TouchableOpacity style={globalStyle.icon} onPress={openModal}>
         <FontAwesome5
           name="user-plus"
           size={18}
-          style={[globalStyle.icon, { fontSize: 32 }]}
+          style={[globalStyle.icon, { fontSize: 28 }]}
         />
       </TouchableOpacity>
 
@@ -88,7 +106,11 @@ export default function ClientsOverview() {
         keyExtractor={(item) => item.id.toString()}
       />
 
-      <TouchableOpacity onPress={removeAllClients}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.openDrawer();
+        }}
+      >
         <Text style={{ color: "black" }}>Apagar</Text>
       </TouchableOpacity>
 

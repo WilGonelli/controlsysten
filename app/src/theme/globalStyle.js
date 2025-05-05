@@ -54,7 +54,7 @@ const globalStyle = StyleSheet.create({
   },
   icon: {
     color: Colors.secundaryColor[20],
-    fontSize: 36,
+    fontSize: 32,
     position: "absolute",
     right: 0,
     top: 18,

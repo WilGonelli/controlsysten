@@ -14,9 +14,30 @@ export const useClientViewModel = () => {
     { label: "Pago", value: "paid" },
   ]);
 
-  const fetchClients = async () => {
+  const fetchClients = async (clientsToRender = "recentes") => {
     const data = await ClientService.getAllClients();
-    setClients(data);
+    if (clientsToRender === "recentes") {
+      const dataFiltred = await data.filter(
+        (client) => client.isArchived === false
+      );
+      setClients(dataFiltred);
+    } else {
+      console.log("aki2");
+      const dataFiltred = await data.filter(
+        (client) => client.isArchived === true
+      );
+      setClients(
+        dataFiltred.sort((a, b) => {
+          if (a.name > b.name) {
+            return 1;
+          }
+          if (a.name < b.name) {
+            return -1;
+          }
+          return 0;
+        })
+      );
+    }
   };
 
   const createClient = async () => {

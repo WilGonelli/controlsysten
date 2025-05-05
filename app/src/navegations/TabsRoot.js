@@ -5,6 +5,7 @@ import ClientsRoot from "./ClientsRoot/ClientsRoot";
 import ProductsRoot from "./ProductsRoot/ProductsRoot";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../theme/colors";
+import ClientDrawerRoot from "./ClientsRoot/ClientDrawerRoot";
 
 export default function TabsRoot() {
   const Tab = createBottomTabNavigator();
@@ -27,7 +28,7 @@ export default function TabsRoot() {
             ),
           }}
           name="Clientes"
-          component={ClientsRoot}
+          component={ClientDrawerRoot}
         />
         <Tab.Screen
           options={{
