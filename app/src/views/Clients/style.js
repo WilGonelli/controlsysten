@@ -27,11 +27,10 @@ export const styles = StyleSheet.create({
   clientItem: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
     backgroundColor: Colors.beige,
-    marginTop: Metrics.margin.medium,
+    marginTop: Metrics.margin.large,
     paddingHorizontal: Metrics.padding.medium,
-    borderRadius: Metrics.borderRadius.medium,
+    borderRadius: Metrics.borderRadius.large,
   },
   //Client update value styles
   labelInputUpdateClient: {

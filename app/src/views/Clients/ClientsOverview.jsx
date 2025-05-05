@@ -20,13 +20,17 @@ const ClientItem = ({ item, navigation }) => {
       style={styles.clientItem}
       onPress={() => navigation.navigate("UpdateClient", { client: item })}
     >
-      <Text style={globalStyle.textCustomButton}>{item.name}</Text>
-      <View style={globalStyle.containerItens}>
+      <Text style={[globalStyle.textCustomButton, { maxWidth: "60%" }]}>
+        {item.name}
+      </Text>
+      <View style={[globalStyle.containerItens, { borderBottomWidth: 0 }]}>
         <Text style={globalStyle.textCustomButton}>R$ </Text>
         <Text
           style={[
             globalStyle.textCustomButton,
-            { color: parseFloat(item.debt) >= 0 ? Colors.red : Colors.green },
+            {
+              color: parseFloat(item.debt) >= 0 ? Colors.red : Colors.green,
+            },
           ]}
         >
           {parseFloat(item.debt).toFixed(2).replace(".", ",")}
@@ -59,7 +63,7 @@ export default function ClientsOverview() {
 
   return (
     <BackgroundDefault>
-      <Text style={globalStyle.title}>Clientes</Text>
+      <Text style={globalStyle.title}>Clientes recentes</Text>
 
       <TouchableOpacity style={globalStyle.icon} onPress={openModal}>
         <FontAwesome5

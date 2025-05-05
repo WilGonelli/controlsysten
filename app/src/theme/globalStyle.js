@@ -23,17 +23,18 @@ const globalStyle = StyleSheet.create({
     textAlignVertical: "center",
   },
   textItens: {
-    height: 30,
     color: Colors.white,
     fontSize: Fonts.fontSize.text,
     textAlignVertical: "center",
+    fontWeight: "bold",
   },
   textCustomButton: {
     fontSize: 22,
     fontWeight: "bold",
     color: Colors.black,
-    textAlign: "center",
     textAlignVertical: "center",
+    textTransform: "uppercase",
+    flexWrap: "wrap",
   },
   containerSubTitle: {
     position: "relative",
@@ -45,9 +46,11 @@ const globalStyle = StyleSheet.create({
   containerItens: {
     flexDirection: "row",
     borderBottomWidth: 1,
+    paddingVertical: Metrics.padding.small,
     marginHorizontal: Metrics.margin.medium,
-    marginTop: Metrics.margin.small,
+    // marginTop: Metrics.margin.small,
     justifyContent: "space-between",
+    height: "100%",
   },
   icon: {
     color: Colors.secundaryColor[20],

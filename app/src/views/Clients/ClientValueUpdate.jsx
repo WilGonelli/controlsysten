@@ -25,7 +25,7 @@ const TransitionsItens = ({ item }) => {
   }
   return (
     <View keyExtractor={item.id}>
-      <View style={globalStyle.containerItens}>
+      <View style={[globalStyle.containerItens, { height: 40 }]}>
         <Text
           style={[
             globalStyle.textItens,
@@ -61,18 +61,14 @@ export default function ClientValueUpdate({ route }) {
     openDropDownPicker,
     setOpenDropDownPicker,
     optionsItems,
-    updateClient,
     setOptionsItems,
-    updateClientName,
-
-    modalVisible,
     inputValueName,
     setInputValueName,
+    modalVisible,
+    updateClient,
+    updateClientName,
     openModal,
     closeModal,
-    createClient,
-    removeAllClients,
-    fetchClients,
     archivedClient,
   } = useClientViewModel();
 
@@ -135,7 +131,15 @@ export default function ClientValueUpdate({ route }) {
       {client.transactions.length > 1 && (
         <View style={styles.transitionsHistoryClient}>
           <View style={{ flex: 1 }}>
-            <Text style={globalStyle.textCustomButton}>
+            <Text
+              style={[
+                globalStyle.textCustomButton,
+                {
+                  width: "100%",
+                  textAlign: "center",
+                },
+              ]}
+            >
               Lista de movimentações
             </Text>
             <FlatList
