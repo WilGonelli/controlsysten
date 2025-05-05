@@ -22,7 +22,7 @@ export default function ModalNewClient({
             {modalTitle}:
           </Text>
           <TextInput
-            placeholder="Digite o Nome"
+            placeholder="Digite o nome"
             placeholderTextColor="#808080"
             value={inputValue}
             onChangeText={setInputValue}

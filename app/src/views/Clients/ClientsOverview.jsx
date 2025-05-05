@@ -120,7 +120,7 @@ export default function ClientsOverview({ route }) {
         onSave={createClient}
         inputValue={inputValueName}
         setInputValue={setInputValueName}
-        modalTitle={"Criar usuário"}
+        modalTitle={"Criar cliente"}
         archivedOn={false}
       />
     </BackgroundDefault>

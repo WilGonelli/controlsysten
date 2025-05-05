@@ -20,7 +20,14 @@ export const useClientViewModel = () => {
       const dataFiltred = await data.filter(
         (client) => client.isArchived === false
       );
-      setClients(dataFiltred);
+      setClients(
+        dataFiltred.sort((a, b) => {
+          if (b.debt !== 0) {
+            return b.lastTransaction - a.lastTransaction;
+          }
+          return a.lastTransaction - b.lastTransaction;
+        })
+      );
     } else {
       const dataFiltred = await data.filter(
         (client) => client.isArchived === true
