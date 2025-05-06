@@ -46,7 +46,14 @@ export const ClientService = {
     }
   },
 
-  removedb: async () => {
-    await clearStorageClient();
+  removeClient: async (idClient) => {
+    const clientList = await ClientService.getAllClients();
+    const data = [];
+    clientList.map((c) => {
+      if (c.id !== idClient) {
+        data.push(c);
+      }
+    });
+    await storageClients(data);
   },
 };

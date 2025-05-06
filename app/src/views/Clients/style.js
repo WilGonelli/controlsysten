@@ -74,4 +74,12 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
   },
+  closeIcon: {
+    fontSize: 38,
+    position: "absolute",
+    right: 8,
+    top: 2,
+    color: Colors.gray,
+    zIndex: 20,
+  },
 });

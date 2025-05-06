@@ -49,7 +49,7 @@ export default function ClientsOverview({ route }) {
     openModal,
     closeModal,
     createClient,
-    removeAllClients,
+    removeClients,
     fetchClients,
   } = useClientViewModel();
 
@@ -105,14 +105,6 @@ export default function ClientsOverview({ route }) {
         )}
         keyExtractor={(item) => item.id.toString()}
       />
-
-      <TouchableOpacity
-        onPress={() => {
-          navigation.openDrawer();
-        }}
-      >
-        <Text style={{ color: "black" }}>Apagar</Text>
-      </TouchableOpacity>
 
       <ModalNewClient
         visible={modalVisible}

@@ -13,6 +13,7 @@ import BackgroundDefault from "../../components/Background/BackgroundDefault";
 import CustomButton from "./../../components/CustomButton/index";
 import { FontAwesome5 } from "@expo/vector-icons";
 import ModalNewClient from "./ModalNewClient";
+import ModalDeleteConfirm from "./ModalDeleteConfirm";
 
 import { styles } from "./style";
 import globalStyle from "./../../theme/globalStyle";
@@ -65,11 +66,15 @@ export default function ClientValueUpdate({ route }) {
     inputValueName,
     setInputValueName,
     modalVisible,
+    modalDeleteVisible,
+    openConfirmModal,
+    closeConfirmModal,
     updateClient,
     updateClientName,
     openModal,
     closeModal,
     archivedClient,
+    removeClients,
   } = useClientViewModel();
 
   const navigation = useNavigation();
@@ -174,10 +179,20 @@ export default function ClientValueUpdate({ route }) {
           await archivedClient(client.id);
           navigation.goBack();
         }}
+        onDelete={openConfirmModal}
         inputValue={inputValueName}
         setInputValue={setInputValueName}
         modalTitle={"Atualizar cliente"}
         archivedOn={client.isArchived ? "Desarquivar" : "Arquivar"}
+      />
+      <ModalDeleteConfirm
+        visibleDelete={modalDeleteVisible}
+        onSave={async () => {
+          await removeClients(client.id);
+          navigation.goBack();
+        }}
+        onClose={closeConfirmModal}
+        clientName={client.name}
       />
     </BackgroundDefault>
   );

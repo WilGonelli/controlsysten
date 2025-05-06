@@ -1,14 +1,23 @@
-import { Modal, View, TextInput, StyleSheet, Text } from "react-native";
+import {
+  Modal,
+  View,
+  TextInput,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import CustomButton from "../../components/CustomButton";
 import Colors from "../../theme/colors";
 import { styles } from "./style";
 import globalStyle from "../../theme/globalStyle";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export default function ModalNewClient({
   visible,
   onClose,
   onSave,
   onArchived,
+  onDelete,
   inputValue,
   setInputValue,
   modalTitle,
@@ -18,6 +27,9 @@ export default function ModalNewClient({
     <Modal visible={visible} transparent animationType="slide">
       <View style={styles.modalBackground}>
         <View style={styles.modalContainer}>
+          <TouchableOpacity style={styles.closeIcon} onPress={onClose}>
+            <FontAwesome style={styles.closeIcon} name="close" />
+          </TouchableOpacity>
           <Text style={[globalStyle.subTitle, { color: Colors.black }]}>
             {modalTitle}:
           </Text>
@@ -34,18 +46,20 @@ export default function ModalNewClient({
             backgroundColor={Colors.primaryColor[60]}
           />
           {archivedOn && (
-            <CustomButton
-              text={`${archivedOn} cliente`}
-              onPress={onArchived}
-              backgroundColor={Colors.secundaryColor[60]}
-            />
-          )}
+            <>
+              <CustomButton
+                text={`${archivedOn} cliente`}
+                onPress={onArchived}
+                backgroundColor={Colors.secundaryColor[40]}
+              />
 
-          <CustomButton
-            text={"Cancelar"}
-            onPress={onClose}
-            backgroundColor={Colors.secundaryColor[20]}
-          />
+              <CustomButton
+                text={"Deletar cliente"}
+                onPress={onDelete}
+                backgroundColor={"#FF6347"}
+              />
+            </>
+          )}
         </View>
       </View>
     </Modal>

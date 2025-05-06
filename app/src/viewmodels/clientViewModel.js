@@ -4,6 +4,7 @@ import { ClientService } from "../services/ClientService";
 export const useClientViewModel = () => {
   const [clients, setClients] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
   const [inputValueName, setInputValueName] = useState("");
 
   const [inputValuePrice, setInputValuePrice] = useState(0);
@@ -54,27 +55,28 @@ export const useClientViewModel = () => {
     fetchClients();
   };
 
-  const removeAllClients = async () => {
-    await ClientService.removedb();
+  const removeClients = async (id) => {
+    await ClientService.removeClient(id);
+    setModalDeleteVisible(false);
     fetchClients();
   };
 
   const updateClient = async (id) => {
     if (inputValuePrice !== 0) {
       await ClientService.updateClient(id, inputValuePrice, selectedItem);
-      fetchClients();
     }
+    fetchClients();
   };
 
   const updateClientName = async (id) => {
     await ClientService.updateClientName(id, inputValueName);
-    fetchClients();
     setModalVisible(false);
+    fetchClients();
   };
   const archivedClient = async (id) => {
     await ClientService.archivedClient(id);
-    fetchClients();
     setModalVisible(false);
+    fetchClients();
   };
 
   useEffect(() => {
@@ -89,16 +91,19 @@ export const useClientViewModel = () => {
     selectedItem,
     openDropDownPicker,
     optionsItems,
+    modalDeleteVisible,
     setInputValueName,
     setInputValuePrice,
     setOpenDropDownPicker,
     setSelectedItem,
     setOptionsItems,
     fetchClients,
+    openConfirmModal: () => setModalDeleteVisible(true),
+    closeConfirmModal: () => setModalDeleteVisible(false),
     openModal: () => setModalVisible(true),
     closeModal: () => setModalVisible(false),
     createClient,
-    removeAllClients,
+    removeClients,
     updateClient,
     updateClientName,
     archivedClient,
