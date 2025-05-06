@@ -104,7 +104,10 @@ export default function ClientValueUpdate({ route }) {
       <View
         style={[
           globalStyle.containerSubTitle,
-          { borderBottomWidth: 0, zIndex: 1000, elevation: 10 },
+          {
+            borderBottomWidth: 0,
+            zIndex: 1000,
+          },
         ]}
       >
         <Text style={styles.labelInputUpdateClient}>operação:</Text>
@@ -130,7 +133,7 @@ export default function ClientValueUpdate({ route }) {
       />
       <CustomButton
         text={"Cancelar"}
-        backgroundColor={Colors.secundaryColor[20]}
+        backgroundColor={Colors.gray}
         onPress={() => navigation.goBack()}
       />
       {client.transactions.length > 1 && (

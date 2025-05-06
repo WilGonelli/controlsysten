@@ -83,14 +83,15 @@ export default function ClientsOverview({ route }) {
         {clientsRender}
       </Text>
 
-      <TouchableOpacity style={globalStyle.icon} onPress={openModal}>
-        <FontAwesome5
-          name="user-plus"
-          size={18}
-          style={[globalStyle.icon, { fontSize: 28 }]}
-        />
-      </TouchableOpacity>
-
+      {clientsRender === "recentes" && (
+        <TouchableOpacity style={globalStyle.icon} onPress={openModal}>
+          <FontAwesome5
+            name="user-plus"
+            size={18}
+            style={[globalStyle.icon, { fontSize: 28 }]}
+          />
+        </TouchableOpacity>
+      )}
       {clients.length > 0 && (
         <View style={globalStyle.containerSubTitle}>
           <Text style={globalStyle.subTitle}>Nome:</Text>
