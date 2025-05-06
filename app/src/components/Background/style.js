@@ -1,16 +1,17 @@
 import { StyleSheet } from "react-native";
-import { StdColor } from "../style/StdStyle";
+import Colors from "../../theme/colors";
 
 export const styles = StyleSheet.create({
-  StdBackground: {
+  BackgroundDefault: {
     flex: 1,
-    backgroundColor: StdColor.backgroundDefault,
+    backgroundColor: Colors.backgroundDefault,
+    position: "relative",
   },
   StdContainer: {
     flex: 1,
     paddingHorizontal: 12,
-    paddingVertical: 24,
-    zIndex: 2,
+    paddingVertical: 8,
+    zIndex: 20,
   },
   image: {
     flex: 1,
