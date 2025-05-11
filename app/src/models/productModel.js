@@ -1,14 +1,18 @@
 export default class Product {
-  constructor(name, type, size, sellPrice) {
+  constructor(
+    inputNameProduct,
+    selectedProductType,
+    selectedProductPack,
+    sellValue
+  ) {
     this.id = Date.now();
-    this.name = name.toUpperCase();
-    this.type = type.toUpperCase();
-    this.size = size.toUpperCase();
-    this.amount = 0;
+    this.name = inputNameProduct.toUpperCase();
+    this.productType = selectedProductType.toUpperCase();
+    this.productPack = selectedProductPack.toUpperCase();
     this.quantityBuy = 0;
     this.quantitySell = 0;
     this.avgPrice = 0;
-    this.sellPrice = sellPrice;
+    this.sellPrice = sellValue;
     this.lastTransaction = Date.now();
     this.transactions = [
       { id: 0, transactionType: "create", amount: 0, price: 0 },
@@ -27,8 +31,6 @@ export default class Product {
     this.lastTransaction = Date.now();
 
     if (transactionType === "sell") {
-      this.amount -= transactionAmount;
-      this.sellPrice = transactionUnitPrice;
       this.quantitySell += transactionAmount;
     } else if (transactionType === "buy") {
       this.amount += transactionAmount;
@@ -43,13 +45,17 @@ export default class Product {
   }
 
   static fromObject(obj) {
-    const product = new Product(obj.name, obj.type, obj.size);
+    const product = new Product(
+      obj.name,
+      obj.productType,
+      obj.productPack,
+      obj.sellPrice
+    );
+
     product.id = obj.id;
-    product.amount = obj.amount;
     product.quantityBuy = obj.quantityBuy;
     product.quantitySell = obj.quantitySell;
     product.avgPrice = obj.avgPrice;
-    product.sellPrice = obj.sellPrice;
     product.lastTransaction = obj.lastTransaction;
     product.transactions = obj.transactions;
     return product;

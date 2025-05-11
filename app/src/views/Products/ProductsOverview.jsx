@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 import BackgroundDefault from "../../components/Background/BackgroundDefault";
@@ -12,8 +12,7 @@ import { styles } from "./style";
 
 import { useProductViewModel } from "./../../viewmodels/productViewModel";
 
-const ProductRender = ({ item }) => {
-  const navigation = useNavigation();
+const ProductRender = ({ item, navigation }) => {
   return (
     <TouchableOpacity
       style={styles.clientItem}
@@ -27,7 +26,7 @@ const ProductRender = ({ item }) => {
           { maxWidth: "80%", textAlign: "start" },
         ]}
       >
-        {item.name} {item.type} {item.size}
+        {item.name} {item.productPack}
       </Text>
       <View
         style={[
@@ -46,25 +45,36 @@ const ProductRender = ({ item }) => {
               : { color: Colors.red },
           ]}
         >
-          {parseInt(item.amount)}
+          {parseInt(item.quantityBuy) - parseInt(item.quantitySell)}
         </Text>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default function ProductsOverview() {
+export default function ProductsOverview({ route }) {
+  const { productsRender } = route.params;
   const {
     products,
     modalVisible,
-    inputValue1,
-    inputValue2,
-    inputValue3,
-    inputValue4,
-    setInputValue1,
-    setInputValue2,
-    setInputValue3,
-    setInputValue4,
+    inputNameProduct,
+    packSize,
+    sellValue,
+    openDropDownProductType,
+    setOpenDropDownProductType,
+    selectedProductType,
+    setSelectedProductType,
+    typesProductsOptions,
+    setTypesProductsOptions,
+    openDropDownProductPack,
+    setOpenDropDownProductPack,
+    selectedProductPack,
+    setSelectedProductPack,
+    packsProductsOptions,
+    setPacksProductsOptions,
+    setInputNameProduct,
+    setPackSize,
+    setSellValue,
     openModal,
     closeModal,
     createProduct,
@@ -72,14 +82,30 @@ export default function ProductsOverview() {
     removeProducts,
   } = useProductViewModel();
 
+  const navigation = useNavigation();
+
   useFocusEffect(
     useCallback(() => {
-      fetchProducts();
-    }, [])
+      fetchProducts(productsRender);
+    }, [modalVisible])
   );
   return (
     <BackgroundDefault>
-      <Text style={globalStyle.title}>Lista de produtos</Text>
+      <TouchableOpacity
+        style={[globalStyle.icon, { left: 8, zIndex: 12 }]}
+        onPress={() => {
+          navigation.openDrawer();
+        }}
+      >
+        <AntDesign
+          name="menuunfold"
+          style={[globalStyle.icon, { left: 8, color: Colors.white }]}
+        />
+      </TouchableOpacity>
+      <Text style={globalStyle.title}>Lista de </Text>
+      <Text style={[globalStyle.title, { marginTop: -12 }]}>
+        {productsRender}
+      </Text>
       <TouchableOpacity style={globalStyle.icon} onPress={openModal}>
         <MaterialCommunityIcons
           name="store-plus"
@@ -94,25 +120,38 @@ export default function ProductsOverview() {
       )}
       <FlatList
         data={products}
-        renderItem={({ item }) => <ProductRender item={item} />}
+        renderItem={({ item }) => (
+          <ProductRender item={item} navigation={navigation} />
+        )}
         keyExtractor={(item) => item.id}
       />
+
       <TouchableOpacity onPress={removeProducts}>
-        <Text style={{ color: "black" }}>apagar</Text>
+        <Text>apagar</Text>
       </TouchableOpacity>
 
       <ModalNewProduct
         visible={modalVisible}
         onClose={closeModal}
         onSave={createProduct}
-        inputValue1={inputValue1}
-        inputValue2={inputValue2}
-        inputValue3={inputValue3}
-        inputValue4={inputValue4}
-        setInputValue1={setInputValue1}
-        setInputValue2={setInputValue2}
-        setInputValue3={setInputValue3}
-        setInputValue4={setInputValue4}
+        inputNameProduct={inputNameProduct}
+        setInputNameProduct={setInputNameProduct}
+        packSize={packSize}
+        setPackSize={setPackSize}
+        sellValue={sellValue}
+        setSellValue={setSellValue}
+        openDropDownProductType={openDropDownProductType}
+        setOpenDropDownProductType={setOpenDropDownProductType}
+        selectedProductType={selectedProductType}
+        setSelectedProductType={setSelectedProductType}
+        typesProductsOptions={typesProductsOptions}
+        setTypesProductsOptions={setTypesProductsOptions}
+        openDropDownProductPack={openDropDownProductPack}
+        setOpenDropDownProductPack={setOpenDropDownProductPack}
+        selectedProductPack={selectedProductPack}
+        setSelectedProductPack={setSelectedProductPack}
+        packsProductsOptions={packsProductsOptions}
+        setPacksProductsOptions={setPacksProductsOptions}
       />
     </BackgroundDefault>
   );

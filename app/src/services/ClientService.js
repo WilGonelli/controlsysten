@@ -19,11 +19,11 @@ export const ClientService = {
     await storageClients(clientList);
   },
 
-  updateClient: async (idClient, value, type) => {
+  updateClient: async (idClient, value, type, product) => {
     const clientList = await ClientService.getAllClients();
     const client = clientList.find((c) => c.id === idClient);
     if (client) {
-      client.addTransaction(value, type);
+      client.addTransaction(value, type, product);
       await storageClients(clientList);
     }
   },

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ClientService } from "../services/ClientService";
+import { ProductService } from "../services/ProductService";
 
 export const useClientViewModel = () => {
   const [clients, setClients] = useState([]);
@@ -7,9 +8,9 @@ export const useClientViewModel = () => {
   const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
   const [inputValueName, setInputValueName] = useState("");
 
-  const [inputValuePrice, setInputValuePrice] = useState(0);
+  const [inputValuePrice, setInputValuePrice] = useState("");
   const [openDropDownPicker, setOpenDropDownPicker] = useState(false);
-  const [selectedItem, setSelectedItem] = useState("spent");
+  const [selectedItem, setSelectedItem] = useState(null);
   const [optionsItems, setOptionsItems] = useState([
     { label: "Gasto", value: "spent" },
     { label: "Pago", value: "paid" },
@@ -61,11 +62,32 @@ export const useClientViewModel = () => {
     fetchClients();
   };
 
-  const updateClient = async (id) => {
-    if (inputValuePrice !== 0) {
-      await ClientService.updateClient(id, inputValuePrice, selectedItem);
+  const updateClient = async (id, sellQuantity, selectedProductSpent) => {
+    if (selectedItem === "spent") {
+      if (!id || !sellQuantity || !selectedProductSpent) {
+        return false;
+      }
+      const product = await ProductService.productFind(selectedProductSpent);
+      await ClientService.updateClient(
+        id,
+        sellQuantity * product.sellPrice,
+        selectedItem,
+        `${sellQuantity} ${product.name} ${product.productPack}`
+      );
+      await ProductService.updateProduct(
+        selectedProductSpent,
+        "sell",
+        sellQuantity,
+        product.sellPrice
+      );
+      return true;
+    } else {
+      if (inputValuePrice > 0) {
+        await ClientService.updateClient(id, inputValuePrice, selectedItem, "");
+      }
+      fetchClients();
+      return true;
     }
-    fetchClients();
   };
 
   const updateClientName = async (id) => {

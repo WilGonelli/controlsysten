@@ -45,8 +45,8 @@ export const styles = StyleSheet.create({
     position: "absolute",
     color: Colors.black,
     fontSize: Fonts.fontSize.subTitle,
-    left: "55%",
-    top: 8,
+    left: 24,
+    top: 10,
     zIndex: 200,
   },
   inputUpdateClient: {
@@ -56,7 +56,6 @@ export const styles = StyleSheet.create({
     color: Colors.black,
     fontSize: Fonts.fontSize.subTitle,
     fontWeight: "bold",
-    paddingLeft: 55,
     zIndex: 10,
   },
   transitionsHistoryClient: {
@@ -81,5 +80,14 @@ export const styles = StyleSheet.create({
     top: 2,
     color: Colors.gray,
     zIndex: 20,
+  },
+  quantityContainer: {
+    width: "100%",
+    height: 46,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: Metrics.padding.large,
+    marginBottom: 18,
   },
 });

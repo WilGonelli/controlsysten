@@ -19,7 +19,7 @@ const globalStyle = StyleSheet.create({
     color: Colors.white,
     fontWeight: Fonts.fontWeight.medium,
     minWidth: "50%",
-    paddingHorizontal: Metrics.padding.medium,
+    paddingHorizontal: Metrics.padding.small,
     textAlignVertical: "center",
   },
   textItens: {
@@ -66,7 +66,7 @@ const globalStyle = StyleSheet.create({
     marginBottom: 10,
     color: Colors.black,
     fontSize: 22,
-    paddingHorizontal: Metrics.padding.medium,
+    paddingHorizontal: Metrics.padding.small,
   },
 });
 

@@ -22,14 +22,6 @@ export const storageClients = async (clientList) => {
   }
 };
 
-export const clearStorageClient = async () => {
-  try {
-    await AsyncStorage.clear(CLIENT_KEY);
-  } catch (e) {
-    console.error(e);
-  }
-};
-
 export const loadProducts = async () => {
   try {
     const data = await AsyncStorage.getItem(PRODUCT_KEY);
