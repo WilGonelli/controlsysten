@@ -27,13 +27,14 @@ const TransitionsItens = ({ item }) => {
   }
   return (
     <View keyExtractor={item.id}>
-      <View style={[globalStyle.containerItens, { height: 40 }]}>
+      <View style={[globalStyle.containerItens, { height: "auto" }]}>
         <Text
           style={[
             globalStyle.textItens,
             item.type === "paid"
               ? { color: Colors.red }
               : { color: Colors.green },
+            { maxWidth: "70%", flexWrap: "wrap" },
           ]}
         >
           {item.type === "paid" ? "Pago" : item.type}
@@ -210,9 +211,16 @@ export default function ClientValueUpdate({ route }) {
             setOpen={setOpenDropDownProductSpent}
             setValue={setSelectedProductSpent}
             placeholder="Selecione"
-            onChangeValue={async (value) => {
-              console.log(value);
-            }}
+            ListEmptyComponent={() => (
+              <Text
+                style={[
+                  globalStyle.textItens,
+                  { color: "black", padding: 12, textAlign: "center" },
+                ]}
+              >
+                Nenhum item disponível
+              </Text>
+            )}
           />
         </>
       )}

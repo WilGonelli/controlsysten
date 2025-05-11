@@ -6,7 +6,7 @@ export const useProductViewModel = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [inputNameProduct, setInputNameProduct] = useState("");
   const [packSize, setPackSize] = useState("");
-  const [sellValue, setSellValue] = useState("");
+  const [sellValue, setSellValue] = useState(null);
   const [openDropDownProductType, setOpenDropDownProductType] = useState(false);
   const [selectedProductType, setSelectedProductType] = useState(null);
   const [typesProductsOptions, setTypesProductsOptions] = useState([
@@ -102,25 +102,30 @@ export const useProductViewModel = () => {
   };
 
   const createProduct = async () => {
-    if (
-      !inputNameProduct.trim() &&
-      !sellValue.trim() &&
-      !selectedProductType.trim()
-    ) {
+    if (parseFloat(sellValue.replace(",", ".")).toFixed(2) < 0) {
+      alert("O valor não pode ser menor que 0");
       return;
     }
-    await ProductService.createProduct(
-      inputNameProduct,
-      selectedProductType,
-      selectedProductPack ? selectedProductPack : "",
-      parseFloat(sellValue.replace(",", ".")).toFixed(2)
-    );
-    setInputNameProduct("");
-    setSelectedProductType(null);
-    setSelectedProductPack(null);
-    setSellValue("");
-    setModalVisible(false);
-    fetchProducts();
+    if (
+      inputNameProduct &&
+      parseFloat(sellValue.replace(",", ".")).toFixed(2) > 0 &&
+      (selectedProductType === "other" || selectedProductPack)
+    ) {
+      await ProductService.createProduct(
+        inputNameProduct,
+        selectedProductType,
+        selectedProductPack ? selectedProductPack : "",
+        parseFloat(sellValue.replace(",", ".")).toFixed(2)
+      );
+      setInputNameProduct("");
+      setSelectedProductType(null);
+      setSelectedProductPack(null);
+      setSellValue("");
+      setModalVisible(false);
+      fetchProducts();
+    } else {
+      alert("Todos os campos precisam ser preenchidos");
+    }
   };
 
   const addTransactions = async (id, operationType) => {

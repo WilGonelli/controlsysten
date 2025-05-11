@@ -1,9 +1,17 @@
-import { Modal, View, TextInput, StyleSheet, Text } from "react-native";
+import {
+  Modal,
+  View,
+  TextInput,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import CustomButton from "../../components/CustomButton";
 import Colors from "../../theme/colors";
 import { styles } from "./style";
 import globalStyle from "../../theme/globalStyle";
 import DropDownPicker from "react-native-dropdown-picker";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export default function ModalNewProduct({
   visible,
@@ -32,6 +40,9 @@ export default function ModalNewProduct({
     <Modal visible={visible} transparent animationType="slide">
       <View style={styles.modalBackground}>
         <View style={styles.modalContainer}>
+          <TouchableOpacity style={styles.closeIcon} onPress={onClose}>
+            <FontAwesome style={styles.closeIcon} name="close" />
+          </TouchableOpacity>
           <TextInput
             placeholder="Produto:"
             placeholderTextColor="#808080"
@@ -88,11 +99,6 @@ export default function ModalNewProduct({
             text={"Salvar"}
             onPress={onSave}
             backgroundColor={Colors.primaryColor[60]}
-          />
-          <CustomButton
-            text={"Cancelar"}
-            onPress={onClose}
-            backgroundColor={Colors.secundaryColor[20]}
           />
         </View>
       </View>

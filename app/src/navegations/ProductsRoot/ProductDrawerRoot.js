@@ -44,7 +44,7 @@ export default function ProductDrawerRoot() {
       >
         {() => <ProductsRoot productsRender="refrigerantes" />}
       </Drawer.Screen>
-      <Drawer.Screen
+      {/* <Drawer.Screen
         options={{
           drawerIcon: ({ color }) => (
             <Entypo name="archive" size={32} color={color} />
@@ -53,7 +53,7 @@ export default function ProductDrawerRoot() {
         name="Outros"
       >
         {() => <ProductsRoot productsRender="outros" />}
-      </Drawer.Screen>
+      </Drawer.Screen> */}
     </Drawer.Navigator>
   );
 }
