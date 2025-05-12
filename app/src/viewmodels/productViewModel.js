@@ -50,6 +50,16 @@ export const useProductViewModel = () => {
   const [selectedProductSpent, setSelectedProductSpent] = useState(null);
   const [spentProductsOptions, setSpentProductsOptions] = useState([]);
   const [sellQuantity, setSellQuantity] = useState(1);
+  const [quantityAvable, setQuantityAvable] = useState(0);
+
+  useEffect(() => {
+    async function updateQuantityAvable() {
+      const data = await ProductService.getAllProducts();
+      const product = data.find((item) => item.id === selectedProductSpent);
+      setQuantityAvable(product.quantityBuy - product.quantitySell);
+    }
+    updateQuantityAvable();
+  }, [selectedProductSpent]);
 
   const fetchProducts = async (productRender) => {
     const data = await ProductService.getAllProducts();
@@ -95,9 +105,15 @@ export const useProductViewModel = () => {
 
   const handleQuantity = async (operation) => {
     if (operation === "plus" && sellQuantity >= 0) {
-      setSellQuantity(sellQuantity + 1);
-    } else if (operation === "minus" && sellQuantity > 0) {
+      if (sellQuantity < quantityAvable) {
+        setSellQuantity(sellQuantity + 1);
+      } else {
+        alert(`Quantidade do item em estoque é: ${quantityAvable}Un.`);
+      }
+    } else if (operation === "minus" && sellQuantity > 1) {
       setSellQuantity(sellQuantity - 1);
+    } else {
+      alert("Não é possivel usar valor menor que 1");
     }
   };
 

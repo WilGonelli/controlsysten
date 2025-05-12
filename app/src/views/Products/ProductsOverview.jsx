@@ -40,7 +40,7 @@ const ProductRender = ({ item, navigation }) => {
             {
               fontSize: 28,
             },
-            parseInt(item.amount) < 10
+            parseInt(item.quantityBuy) - parseInt(item.quantitySell) < 10
               ? { color: Colors.green }
               : { color: Colors.red },
           ]}

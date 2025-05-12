@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
 import { useNavigation } from "@react-navigation/native";
 import BackgroundDefault from "../../components/Background/BackgroundDefault";
 import CustomButton from "./../../components/CustomButton/index";
@@ -128,7 +127,9 @@ export default function ProductUpdateTransaction({ route }) {
               style={[globalStyle.containerItens, { height: "max-content" }]}
             >
               <Text style={globalStyle.textItens}>Quantidade em estoque:</Text>
-              <Text style={globalStyle.textItens}>{item.amount} Un.</Text>
+              <Text style={globalStyle.textItens}>
+                {item.quantityBuy - item.quantitySell} Un.
+              </Text>
             </View>
             <View
               style={[globalStyle.containerItens, { height: "max-content" }]}

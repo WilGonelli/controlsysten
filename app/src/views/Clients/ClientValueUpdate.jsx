@@ -131,6 +131,7 @@ export default function ClientValueUpdate({ route }) {
         setValue={setSelectedItem}
         setItems={setOptionsItems}
         placeholder="Selecione"
+        zIndex={100}
       />
 
       {selectedItem === "paid" && (
@@ -192,6 +193,7 @@ export default function ClientValueUpdate({ route }) {
             onChangeValue={(value) => {
               handleOptionsInput(value);
             }}
+            zIndex={90}
           />
         </>
       )}
@@ -268,6 +270,7 @@ export default function ClientValueUpdate({ route }) {
               setOpen={setOpenDropDownProductSpent}
               setValue={setSelectedProductSpent}
               placeholder="Selecione"
+              zIndex={80}
               ListEmptyComponent={() => (
                 <Text
                   style={[
@@ -292,7 +295,9 @@ export default function ClientValueUpdate({ route }) {
             Quantidade:
           </Text>
           <View style={[styles.inputUpdateClient, styles.quantityContainer]}>
-            <TouchableOpacity onPress={() => handleQuantity("minus")}>
+            <TouchableOpacity
+              onPress={() => handleQuantity("minus", selectedProductSpent)}
+            >
               <AntDesign name="minus" size={42} color="#66CDAA" />
             </TouchableOpacity>
             <Text
@@ -309,7 +314,9 @@ export default function ClientValueUpdate({ route }) {
             >
               {sellQuantity}
             </Text>
-            <TouchableOpacity onPress={() => handleQuantity("plus")}>
+            <TouchableOpacity
+              onPress={() => handleQuantity("plus", selectedProductSpent)}
+            >
               <AntDesign name="plus" size={42} color="#FF4500" />
             </TouchableOpacity>
           </View>
