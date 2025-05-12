@@ -12,7 +12,7 @@ export const useProductViewModel = () => {
   const [typesProductsOptions, setTypesProductsOptions] = useState([
     { label: "Cerveja", value: "beer" },
     { label: "Refrigerante", value: "refrigerator" },
-    // { label: "outros", value: "other" },
+    { label: "outros", value: "other" },
   ]);
   const [openDropDownProductPack, setOpenDropDownProductPack] = useState(false);
   const [selectedProductPack, setSelectedProductPack] = useState(null);

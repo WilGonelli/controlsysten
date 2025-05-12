@@ -77,6 +77,10 @@ export default function ClientValueUpdate({ route }) {
     closeModal,
     archivedClient,
     removeClients,
+    descriptionOthers,
+    setDescriptionOthers,
+    valueOthers,
+    setValueOthers,
   } = useClientViewModel();
 
   const {
@@ -150,16 +154,16 @@ export default function ClientValueUpdate({ route }) {
               onChangeText={(text) => {
                 const numericText = text.replace(/\D/g, "");
                 const cents = parseInt(numericText || "0", 10);
-                const formatted = (cents / 100).toFixed(2).replace(".", ",");
                 const format = (parseInt(cents || "0", 10) / 100)
                   .toFixed(2)
                   .replace(".", ",");
                 setInputValuePrice(format);
               }}
-              defaultValue={(client.debt * -1)
-                .toFixed(2)
-                .toString()
-                .replace(".", ",")}
+              defaultValue={
+                client.debt < 0
+                  ? (client.debt * -1).toFixed(2).toString().replace(".", ",")
+                  : 0
+              }
               inputMode="decimal"
               textAlign="left"
             />
@@ -191,40 +195,93 @@ export default function ClientValueUpdate({ route }) {
           />
         </>
       )}
-
-      {selectedProductType && (
+      {selectedItem === "spent" && selectedProductType === "other" && (
         <>
           <Text
             style={[
               globalStyle.subTitle,
-              { color: Colors.gray, marginTop: 12 },
+              { color: Colors.gray, marginTop: 12, position: "relative" },
             ]}
           >
-            Produto:
+            Descrição:
           </Text>
-          <DropDownPicker
-            style={[styles.inputUpdateClient, { width: "100%" }]}
-            textStyle={[globalStyle.textItens, { color: Colors.black }]}
-            open={openDropDownProductSpent}
-            value={selectedProductSpent}
-            items={spentProductsOptions}
-            setOpen={setOpenDropDownProductSpent}
-            setValue={setSelectedProductSpent}
-            placeholder="Selecione"
-            ListEmptyComponent={() => (
-              <Text
-                style={[
-                  globalStyle.textItens,
-                  { color: "black", padding: 12, textAlign: "center" },
-                ]}
-              >
-                Nenhum item disponível
-              </Text>
-            )}
-          />
+          <View>
+            <TextInput
+              style={[
+                styles.inputUpdateClient,
+                { paddingLeft: 12, width: "100%" },
+              ]}
+              value={descriptionOthers}
+              onChangeText={setDescriptionOthers}
+              textAlign="left"
+            />
+          </View>
+          <Text
+            style={[
+              globalStyle.subTitle,
+              { color: Colors.gray, marginTop: 12, position: "relative" },
+            ]}
+          >
+            valor:
+          </Text>
+          <View>
+            <Text style={styles.cifraoInput}>R$</Text>
+            <TextInput
+              style={[
+                styles.inputUpdateClient,
+                { paddingLeft: 80, width: "100%" },
+              ]}
+              value={valueOthers}
+              onChangeText={(text) => {
+                const numericText = text.replace(/\D/g, "");
+                const cents = parseInt(numericText || "0", 10);
+                const format = (parseInt(cents || "0", 10) / 100)
+                  .toFixed(2)
+                  .replace(".", ",");
+                setValueOthers(format);
+              }}
+              inputMode="decimal"
+              textAlign="left"
+            />
+          </View>
         </>
       )}
-      {selectedProductSpent && (
+
+      {selectedItem === "spent" &&
+        selectedProductType &&
+        selectedProductType !== "other" && (
+          <>
+            <Text
+              style={[
+                globalStyle.subTitle,
+                { color: Colors.gray, marginTop: 12 },
+              ]}
+            >
+              Produto:
+            </Text>
+            <DropDownPicker
+              style={[styles.inputUpdateClient, { width: "100%" }]}
+              textStyle={[globalStyle.textItens, { color: Colors.black }]}
+              open={openDropDownProductSpent}
+              value={selectedProductSpent}
+              items={spentProductsOptions}
+              setOpen={setOpenDropDownProductSpent}
+              setValue={setSelectedProductSpent}
+              placeholder="Selecione"
+              ListEmptyComponent={() => (
+                <Text
+                  style={[
+                    globalStyle.textItens,
+                    { color: "black", padding: 12, textAlign: "center" },
+                  ]}
+                >
+                  Nenhum item disponível
+                </Text>
+              )}
+            />
+          </>
+        )}
+      {selectedItem === "spent" && selectedProductSpent && (
         <>
           <Text
             style={[
@@ -263,10 +320,12 @@ export default function ClientValueUpdate({ route }) {
         text={"Adicionar"}
         backgroundColor={Colors.primaryColor[60]}
         onPress={async () => {
+          console.log("aki");
           const updated = await updateClient(
             client.id,
             sellQuantity,
-            selectedProductSpent
+            selectedProductSpent,
+            selectedProductType
           );
           if (updated) {
             navigation.goBack();
@@ -319,8 +378,12 @@ export default function ClientValueUpdate({ route }) {
         visible={modalVisible}
         onClose={closeModal}
         onSave={async () => {
-          await updateClientName(client.id);
-          navigation.goBack();
+          const res = await updateClientName(client.id);
+          if (res) {
+            navigation.goBack();
+          } else {
+            alert("Nome Invalido");
+          }
         }}
         onArchived={async () => {
           await archivedClient(client.id);

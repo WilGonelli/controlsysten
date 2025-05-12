@@ -16,6 +16,9 @@ export const useClientViewModel = () => {
     { label: "Pago", value: "paid" },
   ]);
 
+  const [descriptionOthers, setDescriptionOthers] = useState(null);
+  const [valueOthers, setValueOthers] = useState(null);
+
   const fetchClients = async (clientsToRender = "recentes") => {
     const data = await ClientService.getAllClients();
     if (clientsToRender === "recentes") {
@@ -62,27 +65,56 @@ export const useClientViewModel = () => {
     fetchClients();
   };
 
-  const updateClient = async (id, sellQuantity, selectedProductSpent) => {
+  const updateClient = async (
+    id,
+    sellQuantity,
+    selectedProductSpent,
+    selectedProductType
+  ) => {
     if (selectedItem === "spent") {
-      if (!id || !sellQuantity || !selectedProductSpent) {
+      if (!id || !selectedProductType) {
         return false;
       }
-      const product = await ProductService.productFind(selectedProductSpent);
-      await ClientService.updateClient(
-        id,
-        sellQuantity * product.sellPrice,
-        selectedItem,
-        `${sellQuantity} ${product.name} ${product.productPack}`
-      );
-      await ProductService.updateProduct(
-        selectedProductSpent,
-        "sell",
-        sellQuantity,
-        product.sellPrice
-      );
-      return true;
+      if (selectedProductType === "other") {
+        if (valueOthers && selectedItem && descriptionOthers) {
+          await ClientService.updateClient(
+            id,
+            valueOthers,
+            selectedItem,
+            `${descriptionOthers}`
+          );
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        if (sellQuantity && selectedItem && selectedProductSpent) {
+          const product = await ProductService.productFind(
+            selectedProductSpent
+          );
+          await ClientService.updateClient(
+            id,
+            sellQuantity * product.sellPrice,
+            selectedItem,
+            `${sellQuantity} ${product.name} ${product.productPack}`
+          );
+          await ProductService.updateProduct(
+            selectedProductSpent,
+            "sell",
+            sellQuantity,
+            product.sellPrice
+          );
+          return true;
+        } else {
+          return false;
+        }
+      }
     } else {
-      if (inputValuePrice > 0) {
+      const formatNumber =
+        typeof inputValuePrice === "number"
+          ? inputValuePrice.toFixed(2)
+          : parseFloat(inputValuePrice.replace(",", ".")).toFixed(2);
+      if (formatNumber > 0) {
         await ClientService.updateClient(id, inputValuePrice, selectedItem, "");
       }
       fetchClients();
@@ -91,9 +123,14 @@ export const useClientViewModel = () => {
   };
 
   const updateClientName = async (id) => {
-    await ClientService.updateClientName(id, inputValueName);
-    setModalVisible(false);
-    fetchClients();
+    if (inputValueName) {
+      await ClientService.updateClientName(id, inputValueName);
+      setModalVisible(false);
+      fetchClients();
+      return true;
+    } else {
+      return false;
+    }
   };
   const archivedClient = async (id) => {
     await ClientService.archivedClient(id);
@@ -129,5 +166,9 @@ export const useClientViewModel = () => {
     updateClient,
     updateClientName,
     archivedClient,
+    descriptionOthers,
+    setDescriptionOthers,
+    valueOthers,
+    setValueOthers,
   };
 };
