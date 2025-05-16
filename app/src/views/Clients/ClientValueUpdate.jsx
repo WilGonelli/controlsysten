@@ -327,7 +327,6 @@ export default function ClientValueUpdate({ route }) {
         text={"Adicionar"}
         backgroundColor={Colors.primaryColor[60]}
         onPress={async () => {
-          console.log("aki");
           const updated = await updateClient(
             client.id,
             sellQuantity,
