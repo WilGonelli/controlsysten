@@ -20,7 +20,7 @@ Aplicativo de controle de estoque e gerenciamento de clientes, desenvolvido em *
 - [React Native](https://reactnative.dev/)
 - [React Navigation](https://reactnavigation.org/)
 - [DropDownPicker](https://github.com/hossein-zare/react-native-dropdown-picker)
-- [JavaScript]
+- JavaScript
 
 ## 🛠️ Estrutura de pastas
 

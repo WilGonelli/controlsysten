@@ -79,7 +79,7 @@ export const useClientViewModel = () => {
         if (valueOthers && selectedItem && descriptionOthers) {
           await ClientService.updateClient(
             id,
-            valueOthers,
+            parseFloat(valueOthers.replace(",", ".")).toFixed(2),
             selectedItem,
             `${descriptionOthers}`
           );
