@@ -18,6 +18,7 @@ export default function TabsRoot() {
           tabBarStyle: {
             backgroundColor: "#2b2b2b",
           },
+          tabBarHideOnKeyboard: true,
         }}
       >
         <Tab.Screen

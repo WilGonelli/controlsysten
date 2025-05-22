@@ -59,19 +59,20 @@ export const styles = StyleSheet.create({
     zIndex: 10,
   },
   transitionsHistoryClient: {
-    flex: 1,
     width: "100%",
     borderRadius: 18,
-    marginTop: 28,
+    marginTop: 12,
     overflow: "hidden",
+    maxHeight: "55%",
     backgroundColor: "rgba(255,255,255,0.5)",
   },
   TotalTransitions: {
-    paddingHorizontal: 24,
+    paddingHorizontal: 18,
     borderTopWidth: 2,
     alignItems: "flex-end",
     flexDirection: "row",
     justifyContent: "flex-end",
+    height: 36,
   },
   closeIcon: {
     fontSize: 38,

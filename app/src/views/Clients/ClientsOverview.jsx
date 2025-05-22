@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { FontAwesome5, AntDesign } from "@expo/vector-icons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
@@ -93,20 +93,16 @@ export default function ClientsOverview({ route }) {
         </TouchableOpacity>
       )}
       {clients.length > 0 && (
-        <View style={globalStyle.containerSubTitle}>
-          <Text style={globalStyle.subTitle}>Nome:</Text>
-          <Text style={globalStyle.subTitle}>Dívida:</Text>
-        </View>
+        <>
+          <View style={globalStyle.containerSubTitle}>
+            <Text style={globalStyle.subTitle}>Nome:</Text>
+            <Text style={globalStyle.subTitle}>Dívida:</Text>
+          </View>
+          {clients.map((c) => (
+            <ClientItem key={c.id} item={c} navigation={navigation} />
+          ))}
+        </>
       )}
-
-      <FlatList
-        data={clients}
-        renderItem={({ item }) => (
-          <ClientItem item={item} navigation={navigation} />
-        )}
-        keyExtractor={(item) => item.id.toString()}
-      />
-
       <ModalNewClient
         visible={modalVisible}
         onClose={closeModal}
