@@ -14,11 +14,11 @@ export default class Client {
     ];
   }
 
-  addTransaction(value, type) {
+  addTransaction(value, type, product) {
     const transaction = {
       id: this.transactions.length,
       value: parseFloat(value),
-      type,
+      type: type === "paid" ? type : product,
     };
 
     this.transactions.push(transaction);

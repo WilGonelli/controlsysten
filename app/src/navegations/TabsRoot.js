@@ -1,11 +1,10 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ClientsRoot from "./ClientsRoot/ClientsRoot";
-import ProductsRoot from "./ProductsRoot/ProductsRoot";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Colors from "../theme/colors";
 import ClientDrawerRoot from "./ClientsRoot/ClientDrawerRoot";
+import ProductDrawerRoot from "./ProductsRoot/ProductDrawerRoot";
 
 export default function TabsRoot() {
   const Tab = createBottomTabNavigator();
@@ -19,6 +18,7 @@ export default function TabsRoot() {
           tabBarStyle: {
             backgroundColor: "#2b2b2b",
           },
+          tabBarHideOnKeyboard: true,
         }}
       >
         <Tab.Screen
@@ -37,7 +37,7 @@ export default function TabsRoot() {
             ),
           }}
           name="Produtos"
-          component={ProductsRoot}
+          component={ProductDrawerRoot}
         />
       </Tab.Navigator>
     </NavigationContainer>

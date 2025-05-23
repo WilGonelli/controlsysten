@@ -100,11 +100,17 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   transitionsHistoryClient: {
-    flex: 1,
     width: "100%",
     borderRadius: 18,
     marginTop: 28,
-    overflow: "hidden",
     backgroundColor: "rgba(255,255,255,0.5)",
+  },
+  closeIcon: {
+    fontSize: 38,
+    position: "absolute",
+    right: 8,
+    top: 2,
+    color: Colors.gray,
+    zIndex: 20,
   },
 });

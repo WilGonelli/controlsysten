@@ -55,7 +55,7 @@ export default function ModalDeleteConfirm({
               fontWeight: "bold",
             }}
           >
-            ao confirmar todos os dados do usuário sera apagado!!!
+            ao confirmar, todos os dados do usuário será apagado!!!
           </Text>
         </View>
       </View>
