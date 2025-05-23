@@ -28,12 +28,12 @@ export default function ProductUpdateTransaction({ route }) {
   } = useProductViewModel();
 
   return (
-    <BackgroundDefault>
-      <Text style={globalStyle.title}>Compra:</Text>
-      <Text style={globalStyle.title}>
-        {item.name} {item.productPack}
-      </Text>
-
+    <BackgroundDefault
+      headerProps={{
+        title: "Compra",
+        complement: `${item.name} ${item.productPack}`,
+      }}
+    >
       <View style={[globalStyle.containerSubTitle, { borderBottomWidth: 0 }]}>
         <Text style={styles.labelInputUpdateClient}>
           Quantidade de unidades:

@@ -90,28 +90,33 @@ export default function ProductsOverview({ route }) {
     }, [modalVisible])
   );
   return (
-    <BackgroundDefault>
-      <TouchableOpacity
-        style={[globalStyle.icon, { left: 8, zIndex: 12 }]}
-        onPress={() => {
-          navigation.openDrawer();
-        }}
-      >
-        <AntDesign
-          name="menuunfold"
-          style={[globalStyle.icon, { left: 8, color: Colors.white }]}
-        />
-      </TouchableOpacity>
-      <Text style={globalStyle.title}>Lista de </Text>
-      <Text style={[globalStyle.title, { marginTop: -12 }]}>
-        {productsRender}
-      </Text>
-      <TouchableOpacity style={globalStyle.icon} onPress={openModal}>
-        <MaterialCommunityIcons
-          name="store-plus"
-          style={[globalStyle.icon, { right: 6, top: 12 }]}
-        />
-      </TouchableOpacity>
+    <BackgroundDefault
+      headerProps={{
+        title: "Lista de",
+        complement: productsRender,
+        leftComponent: (
+          <TouchableOpacity
+            style={[globalStyle.icon, { left: 8, zIndex: 12 }]}
+            onPress={() => {
+              navigation.openDrawer();
+            }}
+          >
+            <AntDesign
+              name="menuunfold"
+              style={[globalStyle.icon, { left: 8, color: Colors.white }]}
+            />
+          </TouchableOpacity>
+        ),
+        rightComponent: (
+          <TouchableOpacity style={globalStyle.icon} onPress={openModal}>
+            <MaterialCommunityIcons
+              name="store-plus"
+              style={globalStyle.icon}
+            />
+          </TouchableOpacity>
+        ),
+      }}
+    >
       {products.length > 0 && (
         <View style={globalStyle.containerSubTitle}>
           <Text style={globalStyle.subTitle}>Produto:</Text>
