@@ -6,10 +6,9 @@ export const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: Colors.backgroundDefault,
     position: "relative",
-    paddingBottom: 20,
+    paddingVertical: 12,
   },
   StdContainer: {
-    height: "100%",
     paddingHorizontal: 12,
     zIndex: 1,
   },

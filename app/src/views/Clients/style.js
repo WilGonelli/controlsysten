@@ -59,11 +59,9 @@ export const styles = StyleSheet.create({
     zIndex: 10,
   },
   transitionsHistoryClient: {
-    width: "100%",
     borderRadius: 18,
     marginTop: 12,
-    overflow: "hidden",
-    maxHeight: "55%",
+    maxHeight: "44%",
     backgroundColor: "rgba(255,255,255,0.5)",
   },
   TotalTransitions: {
@@ -72,7 +70,6 @@ export const styles = StyleSheet.create({
     alignItems: "flex-end",
     flexDirection: "row",
     justifyContent: "flex-end",
-    height: 36,
   },
   closeIcon: {
     fontSize: 38,
@@ -90,5 +87,8 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: Metrics.padding.large,
     marginBottom: 18,
+  },
+  containerScroll: {
+    maxHeight: "86%",
   },
 });
