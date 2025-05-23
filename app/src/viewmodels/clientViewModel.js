@@ -114,9 +114,7 @@ export const useClientViewModel = () => {
         typeof inputValuePrice === "number"
           ? inputValuePrice.toFixed(2)
           : parseFloat(inputValuePrice.replace(",", ".")).toFixed(2);
-      if (formatNumber > 0) {
-        await ClientService.updateClient(id, inputValuePrice, selectedItem, "");
-      }
+      await ClientService.updateClient(id, formatNumber, selectedItem, "");
       fetchClients();
       return true;
     }
