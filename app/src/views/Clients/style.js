@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import Colors from "./../../theme/colors";
-import Metrics from "./../../theme/metrics";
-import Fonts from "./../../theme/fonts";
+import Colors from "../../theme/colors";
+import Metrics from "../../theme/metrics";
+import Fonts from "../../theme/fonts";
 
 export const styles = StyleSheet.create({
   //modal styles
@@ -60,8 +60,8 @@ export const styles = StyleSheet.create({
   },
   transitionsHistoryClient: {
     borderRadius: 18,
-    marginTop: 12,
-    maxHeight: "44%",
+    marginTop: 18,
+    marginBottom: 100,
     backgroundColor: "rgba(255,255,255,0.5)",
   },
   TotalTransitions: {

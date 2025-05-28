@@ -126,71 +126,143 @@ export default function ClientValueUpdate({ route }) {
         ),
       }}
     >
-      <View
-        style={{
-          justfyContent: "space-between",
-          height: "93%",
-        }}
-      >
-        <ScrollView style={{ maxHeight: "60%" }}>
-          <Text style={[globalStyle.subTitle, { color: Colors.gray }]}>
-            Operação:
-          </Text>
-          <DropDownPicker
-            style={[styles.inputUpdateClient, { width: "100%" }]}
-            textStyle={[globalStyle.textItens, { color: Colors.black }]}
-            open={openDropDownPicker}
-            value={selectedItem}
-            items={optionsItems}
-            setOpen={setOpenDropDownPicker}
-            setValue={setSelectedItem}
-            setItems={setOptionsItems}
-            placeholder="Selecione"
-            zIndex={100}
-            listMode="SCROLLVIEW"
-          />
+      <ScrollView>
+        <Text style={[globalStyle.subTitle, { color: Colors.gray }]}>
+          Operação:
+        </Text>
+        <DropDownPicker
+          style={[styles.inputUpdateClient, { width: "100%" }]}
+          textStyle={[globalStyle.textItens, { color: Colors.black }]}
+          open={openDropDownPicker}
+          value={selectedItem}
+          items={optionsItems}
+          setOpen={setOpenDropDownPicker}
+          setValue={setSelectedItem}
+          setItems={setOptionsItems}
+          placeholder="Selecione"
+          zIndex={100}
+          listMode="SCROLLVIEW"
+        />
 
-          {selectedItem === "paid" && (
-            <>
-              <Text
+        {selectedItem === "paid" && (
+          <>
+            <Text
+              style={[
+                globalStyle.subTitle,
+                { color: Colors.gray, marginTop: 12, position: "relative" },
+              ]}
+            >
+              valor:
+            </Text>
+            <View>
+              <Text style={styles.cifraoInput}>R$</Text>
+              <TextInput
                 style={[
-                  globalStyle.subTitle,
-                  { color: Colors.gray, marginTop: 12, position: "relative" },
+                  styles.inputUpdateClient,
+                  { paddingLeft: 80, width: "100%" },
                 ]}
-              >
-                valor:
-              </Text>
-              <View>
-                <Text style={styles.cifraoInput}>R$</Text>
-                <TextInput
-                  style={[
-                    styles.inputUpdateClient,
-                    { paddingLeft: 80, width: "100%" },
-                  ]}
-                  value={inputValuePrice}
-                  onChangeText={(text) => {
-                    const numericText = text.replace(/\D/g, "");
-                    const cents = parseInt(numericText || "0", 10);
-                    const format = (parseInt(cents || "0", 10) / 100)
-                      .toFixed(2)
-                      .replace(".", ",");
-                    setInputValuePrice(format);
-                  }}
-                  defaultValue={
-                    client.debt < 0
-                      ? (client.debt * -1)
-                          .toFixed(2)
-                          .toString()
-                          .replace(".", ",")
-                      : 0
-                  }
-                  inputMode="decimal"
-                  textAlign="left"
-                />
-              </View>
-            </>
-          )}
-          {selectedItem === "spent" && (
+                value={inputValuePrice}
+                onChangeText={(text) => {
+                  const numericText = text.replace(/\D/g, "");
+                  const cents = parseInt(numericText || "0", 10);
+                  const format = (parseInt(cents || "0", 10) / 100)
+                    .toFixed(2)
+                    .replace(".", ",");
+                  setInputValuePrice(format);
+                }}
+                defaultValue={
+                  client.debt < 0
+                    ? (client.debt * -1).toFixed(2).toString().replace(".", ",")
+                    : 0
+                }
+                inputMode="decimal"
+                textAlign="left"
+              />
+            </View>
+          </>
+        )}
+        {selectedItem === "spent" && (
+          <>
+            <Text
+              style={[
+                globalStyle.subTitle,
+                { color: Colors.gray, marginTop: 12 },
+              ]}
+            >
+              Categoria:
+            </Text>
+            <DropDownPicker
+              listMode="SCROLLVIEW"
+              style={[styles.inputUpdateClient, { width: "100%" }]}
+              textStyle={[globalStyle.textItens, { color: Colors.black }]}
+              open={openDropDownProductType}
+              value={selectedProductType}
+              items={typesProductsOptions}
+              setOpen={setOpenDropDownProductType}
+              setValue={setSelectedProductType}
+              placeholder="Selecione"
+              onChangeValue={(value) => {
+                handleOptionsInput(value);
+              }}
+              zIndex={90}
+            />
+          </>
+        )}
+        {selectedItem === "spent" && selectedProductType === "other" && (
+          <>
+            <Text
+              style={[
+                globalStyle.subTitle,
+                { color: Colors.gray, marginTop: 12, position: "relative" },
+              ]}
+            >
+              Descrição:
+            </Text>
+            <View>
+              <TextInput
+                style={[
+                  styles.inputUpdateClient,
+                  { paddingLeft: 12, width: "100%" },
+                ]}
+                value={descriptionOthers}
+                onChangeText={setDescriptionOthers}
+                textAlign="left"
+              />
+            </View>
+            <Text
+              style={[
+                globalStyle.subTitle,
+                { color: Colors.gray, marginTop: 12, position: "relative" },
+              ]}
+            >
+              valor:
+            </Text>
+            <View>
+              <Text style={styles.cifraoInput}>R$</Text>
+              <TextInput
+                style={[
+                  styles.inputUpdateClient,
+                  { paddingLeft: 80, width: "100%" },
+                ]}
+                value={valueOthers}
+                onChangeText={(text) => {
+                  const numericText = text.replace(/\D/g, "");
+                  const cents = parseInt(numericText || "0", 10);
+                  const format = (parseInt(cents || "0", 10) / 100)
+                    .toFixed(2)
+                    .replace(".", ",");
+                  setValueOthers(format);
+                }}
+                inputMode="decimal"
+                textAlign="left"
+              />
+            </View>
+          </>
+        )}
+
+        {selectedItem === "spent" &&
+          selectedProductType &&
+          selectedProductType !== "other" && (
             <>
               <Text
                 style={[
@@ -198,177 +270,93 @@ export default function ClientValueUpdate({ route }) {
                   { color: Colors.gray, marginTop: 12 },
                 ]}
               >
-                Categoria:
+                Produto:
               </Text>
               <DropDownPicker
                 listMode="SCROLLVIEW"
                 style={[styles.inputUpdateClient, { width: "100%" }]}
                 textStyle={[globalStyle.textItens, { color: Colors.black }]}
-                open={openDropDownProductType}
-                value={selectedProductType}
-                items={typesProductsOptions}
-                setOpen={setOpenDropDownProductType}
-                setValue={setSelectedProductType}
+                open={openDropDownProductSpent}
+                value={selectedProductSpent}
+                items={spentProductsOptions}
+                setOpen={setOpenDropDownProductSpent}
+                setValue={setSelectedProductSpent}
                 placeholder="Selecione"
-                onChangeValue={(value) => {
-                  handleOptionsInput(value);
-                }}
-                zIndex={90}
+                zIndex={80}
+                ListEmptyComponent={() => (
+                  <Text
+                    style={[
+                      globalStyle.textItens,
+                      { color: "black", padding: 12, textAlign: "center" },
+                    ]}
+                  >
+                    Nenhum item disponível
+                  </Text>
+                )}
               />
             </>
           )}
-          {selectedItem === "spent" && selectedProductType === "other" && (
-            <>
-              <Text
-                style={[
-                  globalStyle.subTitle,
-                  { color: Colors.gray, marginTop: 12, position: "relative" },
-                ]}
+        {selectedItem === "spent" && selectedProductSpent && (
+          <>
+            <Text
+              style={[
+                globalStyle.subTitle,
+                { color: Colors.gray, marginTop: 12 },
+              ]}
+            >
+              Quantidade:
+            </Text>
+            <View style={[styles.inputUpdateClient, styles.quantityContainer]}>
+              <TouchableOpacity
+                onPress={() => handleQuantity("minus", selectedProductSpent)}
               >
-                Descrição:
-              </Text>
-              <View>
-                <TextInput
-                  style={[
-                    styles.inputUpdateClient,
-                    { paddingLeft: 12, width: "100%" },
-                  ]}
-                  value={descriptionOthers}
-                  onChangeText={setDescriptionOthers}
-                  textAlign="left"
-                />
-              </View>
+                <AntDesign name="minus" size={42} color="#66CDAA" />
+              </TouchableOpacity>
               <Text
-                style={[
-                  globalStyle.subTitle,
-                  { color: Colors.gray, marginTop: 12, position: "relative" },
-                ]}
+                style={{
+                  color: Colors.black,
+                  marginTop: 12,
+                  fontSize: 32,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  textAlignVertical: "center",
+                  height: "100%",
+                  marginTop: 0,
+                }}
               >
-                valor:
+                {sellQuantity}
               </Text>
-              <View>
-                <Text style={styles.cifraoInput}>R$</Text>
-                <TextInput
-                  style={[
-                    styles.inputUpdateClient,
-                    { paddingLeft: 80, width: "100%" },
-                  ]}
-                  value={valueOthers}
-                  onChangeText={(text) => {
-                    const numericText = text.replace(/\D/g, "");
-                    const cents = parseInt(numericText || "0", 10);
-                    const format = (parseInt(cents || "0", 10) / 100)
-                      .toFixed(2)
-                      .replace(".", ",");
-                    setValueOthers(format);
-                  }}
-                  inputMode="decimal"
-                  textAlign="left"
-                />
-              </View>
-            </>
-          )}
+              <TouchableOpacity
+                onPress={() => handleQuantity("plus", selectedProductSpent)}
+              >
+                <AntDesign name="plus" size={42} color="#FF4500" />
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
 
-          {selectedItem === "spent" &&
-            selectedProductType &&
-            selectedProductType !== "other" && (
-              <>
-                <Text
-                  style={[
-                    globalStyle.subTitle,
-                    { color: Colors.gray, marginTop: 12 },
-                  ]}
-                >
-                  Produto:
-                </Text>
-                <DropDownPicker
-                  listMode="SCROLLVIEW"
-                  style={[styles.inputUpdateClient, { width: "100%" }]}
-                  textStyle={[globalStyle.textItens, { color: Colors.black }]}
-                  open={openDropDownProductSpent}
-                  value={selectedProductSpent}
-                  items={spentProductsOptions}
-                  setOpen={setOpenDropDownProductSpent}
-                  setValue={setSelectedProductSpent}
-                  placeholder="Selecione"
-                  zIndex={80}
-                  ListEmptyComponent={() => (
-                    <Text
-                      style={[
-                        globalStyle.textItens,
-                        { color: "black", padding: 12, textAlign: "center" },
-                      ]}
-                    >
-                      Nenhum item disponível
-                    </Text>
-                  )}
-                />
-              </>
-            )}
-          {selectedItem === "spent" && selectedProductSpent && (
-            <>
-              <Text
-                style={[
-                  globalStyle.subTitle,
-                  { color: Colors.gray, marginTop: 12 },
-                ]}
-              >
-                Quantidade:
-              </Text>
-              <View
-                style={[styles.inputUpdateClient, styles.quantityContainer]}
-              >
-                <TouchableOpacity
-                  onPress={() => handleQuantity("minus", selectedProductSpent)}
-                >
-                  <AntDesign name="minus" size={42} color="#66CDAA" />
-                </TouchableOpacity>
-                <Text
-                  style={{
-                    color: Colors.black,
-                    marginTop: 12,
-                    fontSize: 32,
-                    fontWeight: "bold",
-                    textAlign: "center",
-                    textAlignVertical: "center",
-                    height: "100%",
-                    marginTop: 0,
-                  }}
-                >
-                  {sellQuantity}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => handleQuantity("plus", selectedProductSpent)}
-                >
-                  <AntDesign name="plus" size={42} color="#FF4500" />
-                </TouchableOpacity>
-              </View>
-            </>
-          )}
-
-          <CustomButton
-            text={"Adicionar"}
-            backgroundColor={Colors.primaryColor[60]}
-            onPress={async () => {
-              const updated = await updateClient(
-                client.id,
-                sellQuantity,
-                selectedProductSpent,
-                selectedProductType
-              );
-              if (updated) {
-                navigation.goBack();
-              } else {
-                alert("Todos os campos precisa estar preenchido");
-              }
-            }}
-          />
-          <CustomButton
-            text={"Cancelar"}
-            backgroundColor={Colors.gray}
-            onPress={() => navigation.goBack()}
-          />
-        </ScrollView>
+        <CustomButton
+          text={"Adicionar"}
+          backgroundColor={Colors.primaryColor[60]}
+          onPress={async () => {
+            const updated = await updateClient(
+              client.id,
+              sellQuantity,
+              selectedProductSpent,
+              selectedProductType
+            );
+            if (updated) {
+              navigation.goBack();
+            } else {
+              alert("Todos os campos precisa estar preenchido");
+            }
+          }}
+        />
+        <CustomButton
+          text={"Cancelar"}
+          backgroundColor={Colors.gray}
+          onPress={() => navigation.goBack()}
+        />
         {client.transactions.length > 1 && (
           <View style={styles.transitionsHistoryClient}>
             <Text
@@ -382,7 +370,7 @@ export default function ClientValueUpdate({ route }) {
             >
               Lista de movimentações
             </Text>
-            <ScrollView style={{ maxHeight: 350 }}>
+            <ScrollView style={{ height: 290 }}>
               {client.transactions.map((t) => (
                 <TransitionsItens key={t.id} item={t} />
               ))}
@@ -433,7 +421,7 @@ export default function ClientValueUpdate({ route }) {
           onClose={closeConfirmModal}
           clientName={client.name}
         />
-      </View>
+      </ScrollView>
     </BackgroundDefault>
   );
 }
