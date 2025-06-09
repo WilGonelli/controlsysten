@@ -374,6 +374,7 @@ export default function ClientValueUpdate({ route }) {
               {client.transactions.map((t) => (
                 <TransitionsItens key={t.id} item={t} />
               ))}
+              
             </ScrollView>
             <View style={styles.TotalTransitions}>
               <Text style={{ fontSize: 24 }}>Saldo: R$ </Text>
