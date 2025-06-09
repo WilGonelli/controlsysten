@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { FontAwesome5, AntDesign } from "@expo/vector-icons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
+import { Dimensions } from "react-native";
+
 import BackgroundDefault from "../../components/Background/BackgroundDefault";
 import CustomButton from "../../components/CustomButton";
 import ModalNewClient from "./ModalNewClient";
@@ -65,6 +67,8 @@ export default function ClientsOverview({ route }) {
     }, [])
   );
 
+  const windowHeight = Dimensions.get("window").height;
+
   return (
     <BackgroundDefault
       headerProps={{
@@ -99,11 +103,18 @@ export default function ClientsOverview({ route }) {
     >
       {clients.length > 0 && (
         <>
-          <View style={globalStyle.containerSubTitle}>
+          <View
+            style={[
+              globalStyle.containerSubTitle,
+              { zIndex: 10, backgroundColor: Colors.backgroundDefault },
+            ]}
+          >
             <Text style={globalStyle.subTitle}>Nome:</Text>
-            <Text style={globalStyle.subTitle}>Dívida:</Text>
+            <Text style={globalStyle.subTitle}>Dívida: </Text>
           </View>
-          <ScrollView style={styles.containerScroll}>
+          <ScrollView
+            style={{ height: windowHeight - 185, marginTop: -20, zIndex: 0 }}
+          >
             {clients.map((c) => (
               <ClientItem key={c.id} item={c} navigation={navigation} />
             ))}

@@ -3,7 +3,7 @@ import {
   storageProducts,
   clearStorageProduct,
 } from "./DbLocalStorage";
-import Product from "./../models/productModel";
+import Product from "../models/productModel";
 
 export const ProductService = {
   getAllProducts: async () => {

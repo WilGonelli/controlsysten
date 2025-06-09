@@ -9,11 +9,11 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import BackgroundDefault from "../../components/Background/BackgroundDefault";
-import CustomButton from "./../../components/CustomButton/index";
+import CustomButton from "../../components/CustomButton/index";
 
 import { styles } from "./style";
-import globalStyle from "./../../theme/globalStyle";
-import Colors from "./../../theme/colors";
+import globalStyle from "../../theme/globalStyle";
+import Colors from "../../theme/colors";
 import { useProductViewModel } from "../../viewmodels/productViewModel";
 
 export default function ProductUpdateTransaction({ route }) {

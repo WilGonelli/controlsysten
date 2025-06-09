@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import Colors from "./../../theme/colors";
-import Metrics from "./../../theme/metrics";
-import Fonts from "./../../theme/fonts";
+import Colors from "../../theme/colors";
+import Metrics from "../../theme/metrics";
+import Fonts from "../../theme/fonts";
 
 export const styles = StyleSheet.create({
   productListOverView: {
